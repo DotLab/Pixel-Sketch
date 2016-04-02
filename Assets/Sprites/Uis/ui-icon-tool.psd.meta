@@ -52,7 +52,7 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 128
   textureSettings:
     filterMode: 1
@@ -87,10 +87,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: 5, y: 4}
+        - {x: -12, y: 16}
+        - {x: -16, y: 16}
+        - {x: -16, y: -8}
+        - {x: -13, y: -8}
+        - {x: 3, y: -16}
+        - {x: 9, y: -16}
+        - {x: 16, y: -8}
+        - {x: 16, y: -3}
+        - {x: 8, y: 4}
     - name: ui-icon-tool-dropper
       rect:
         serializedVersion: 2
@@ -102,9 +108,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
+      - - {x: 0, y: 16}
+        - {x: -8, y: 12}
+        - {x: -16, y: -7}
+        - {x: -16, y: -14}
+        - {x: -15, y: -16}
+        - {x: 5, y: -16}
+        - {x: 16, y: 0}
         - {x: 16, y: 16}
     - name: ui-icon-tool-pencil
       rect:
@@ -117,10 +127,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
+      - - {x: 5, y: 16}
+        - {x: -16, y: -4}
         - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+        - {x: -3, y: -16}
+        - {x: 16, y: 0}
+        - {x: 16, y: 10}
+        - {x: 13, y: 16}
     - name: ui-icon-tool-eraser
       rect:
         serializedVersion: 2
@@ -132,10 +145,12 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -4, y: 15}
+        - {x: -13, y: 1}
+        - {x: -13, y: -15}
+        - {x: 9, y: -15}
+        - {x: 13, y: -2}
+        - {x: 13, y: 15}
     - name: ui-icon-tool-brush
       rect:
         serializedVersion: 2
@@ -147,10 +162,13 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
+      - - {x: 15, y: 16}
+        - {x: -2, y: 16}
+        - {x: -16, y: 4}
         - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+        - {x: 4, y: -16}
+        - {x: 16, y: -3}
+        - {x: 16, y: 15}
     - name: ui-icon-tool-select-rect
       rect:
         serializedVersion: 2
@@ -162,10 +180,51 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -16, y: -8}
+        - {x: -16, y: -12}
+        - {x: -15, y: -14}
+        - {x: -10, y: -14}
+        - {x: -8, y: -13}
+        - {x: -8, y: -10}
+        - {x: -12, y: -6}
+        - {x: -14, y: -6}
+      - - {x: -8, y: -8}
+        - {x: -8, y: -14}
+        - {x: 4, y: -14}
+        - {x: 4, y: -9}
+        - {x: 2, y: -8}
+      - - {x: 10, y: -2}
+        - {x: 4, y: -9}
+        - {x: 4, y: -14}
+        - {x: 16, y: -14}
+        - {x: 16, y: -4}
+        - {x: 14, y: -2}
+      - - {x: -16, y: -6}
+        - {x: -10, y: -6}
+        - {x: -10, y: 4}
+        - {x: -11, y: 6}
+        - {x: -16, y: 6}
+      - - {x: 4, y: 14}
+        - {x: 4, y: 1}
+        - {x: 5, y: -2}
+        - {x: 16, y: -2}
+        - {x: 16, y: 13}
+        - {x: 14, y: 14}
+      - - {x: -16, y: 14}
+        - {x: -16, y: 7}
+        - {x: -14, y: 6}
+        - {x: -12, y: 6}
+        - {x: -8, y: 8}
+        - {x: -8, y: 12}
+        - {x: -9, y: 14}
+      - - {x: -6, y: 14}
+        - {x: -8, y: 12}
+        - {x: -8, y: 10}
+        - {x: -6, y: 8}
+        - {x: 2, y: 8}
+        - {x: 4, y: 10}
+        - {x: 4, y: 12}
+        - {x: 2, y: 14}
     - name: ui-icon-tool-select-ellip
       rect:
         serializedVersion: 2
@@ -177,10 +236,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -11, y: 14}
+        - {x: -16, y: 8}
+        - {x: -16, y: -8}
+        - {x: -12, y: -14}
+        - {x: 9, y: -14}
+        - {x: 16, y: -11}
+        - {x: 16, y: 7}
+        - {x: 13, y: 14}
     - name: ui-icon-tool-select-poly
       rect:
         serializedVersion: 2
@@ -192,10 +255,20 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: 12, y: -1}
+        - {x: 7, y: -3}
+        - {x: 2, y: -4}
+        - {x: 12, y: -1}
+        - {x: 14, y: -1}
+        - {x: 16, y: 1}
+        - {x: 16, y: 14}
+        - {x: -16, y: 14}
+        - {x: -16, y: -2}
+        - {x: -13, y: -14}
+        - {x: 6, y: -14}
+        - {x: 13, y: -13}
+        - {x: 16, y: -7}
+        - {x: 16, y: -1}
     - name: ui-icon-tool-shape-rect
       rect:
         serializedVersion: 2
@@ -207,10 +280,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -16, y: 14}
+        - {x: -16, y: -14}
+        - {x: 16, y: -14}
+        - {x: 16, y: 12}
+        - {x: 14, y: 14}
     - name: ui-icon-tool-shape-ellip
       rect:
         serializedVersion: 2
@@ -222,10 +296,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: 9, y: 14}
+        - {x: -6, y: 14}
+        - {x: -12, y: 13}
+        - {x: -16, y: 10}
+        - {x: -16, y: -8}
+        - {x: -14, y: -14}
+        - {x: 9, y: -14}
+        - {x: 16, y: -7}
+        - {x: 16, y: 8}
     - name: ui-icon-tool-shape-poly
       rect:
         serializedVersion: 2
@@ -237,10 +316,12 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -16, y: 14}
+        - {x: -16, y: -1}
+        - {x: -13, y: -14}
+        - {x: 2, y: -14}
+        - {x: 16, y: -9}
+        - {x: 16, y: 14}
     - name: ui-icon-tool-shape-line
       rect:
         serializedVersion: 2
@@ -252,10 +333,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: 14, y: 14}
+        - {x: 10, y: 14}
+        - {x: -16, y: -8}
+        - {x: -16, y: -12}
+        - {x: -15, y: -14}
+        - {x: -9, y: -14}
+        - {x: 16, y: 9}
+        - {x: 16, y: 12}
     outline: []
   spritePackingTag: 
   userData: 

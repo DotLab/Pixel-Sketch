@@ -16,6 +16,10 @@ public class GridLayoutFitter : MonoBehaviour {
 		OnRectTransformDimensionsChange();
 	}
 
+	void OnValidate () {
+		OnRectTransformDimensionsChange();
+	}
+
 	[ContextMenu("Fit")]
 	public void OnRectTransformDimensionsChange () {
 		var trans = GetComponent<RectTransform>();

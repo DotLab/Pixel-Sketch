@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: afa8ce672d80a3144bb653d135ae6e14
-timeCreated: 1459393340
+timeCreated: 1459574980
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,13 @@ TextureImporter:
     21300010: ui-icon-editor_5
     21300012: ui-icon-editor_6
     21300014: ui-icon-editor_7
+    21300016: ui-icon-editor_8
+    21300018: ui-icon-editor_9
+    21300020: ui-icon-editor_10
+    21300022: ui-icon-editor_11
+    21300024: ui-icon-editor_12
+    21300026: ui-icon-editor_13
+    21300028: ui-icon-editor_14
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -34,10 +41,10 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 128
   textureSettings:
-    filterMode: -1
+    filterMode: 1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -66,13 +73,16 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -15, y: 14}
+        - {x: -16, y: 11}
+        - {x: -16, y: -12}
+        - {x: -15, y: -14}
+        - {x: 14, y: -14}
+        - {x: 16, y: -13}
+        - {x: 16, y: 14}
     - name: ui-icon-editor_1
       rect:
         serializedVersion: 2
@@ -81,13 +91,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -16, y: 14}
+        - {x: -16, y: -14}
+        - {x: 16, y: -14}
+        - {x: 16, y: 12}
+        - {x: 14, y: 14}
     - name: ui-icon-editor_2
       rect:
         serializedVersion: 2
@@ -96,13 +107,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -16, y: 14}
+        - {x: -16, y: -14}
+        - {x: 16, y: -14}
+        - {x: 16, y: 12}
+        - {x: 14, y: 14}
     - name: ui-icon-editor_3
       rect:
         serializedVersion: 2
@@ -111,12 +123,17 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
+      - - {x: 0, y: 16}
+        - {x: -8, y: 11}
+        - {x: -16, y: -7}
+        - {x: -16, y: -13}
+        - {x: -13, y: -16}
+        - {x: -5, y: -16}
+        - {x: 13, y: -8}
+        - {x: 16, y: -1}
         - {x: 16, y: 16}
     - name: ui-icon-editor_4
       rect:
@@ -126,13 +143,17 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -8, y: 16}
+        - {x: -16, y: 9}
+        - {x: -16, y: -8}
+        - {x: -9, y: -16}
+        - {x: 12, y: -16}
+        - {x: 16, y: -9}
+        - {x: 16, y: 13}
+        - {x: 9, y: 16}
     - name: ui-icon-editor_5
       rect:
         serializedVersion: 2
@@ -141,13 +162,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: 8, y: 16}
+        - {x: -12, y: 16}
+        - {x: -12, y: -16}
+        - {x: 2, y: -16}
+        - {x: 14, y: 5}
+        - {x: 14, y: 11}
     - name: ui-icon-editor_6
       rect:
         serializedVersion: 2
@@ -156,13 +179,17 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -4, y: 16}
+        - {x: -16, y: 12}
+        - {x: -16, y: -13}
+        - {x: -9, y: -16}
+        - {x: 3, y: -16}
+        - {x: 16, y: -11}
+        - {x: 16, y: 11}
+        - {x: 8, y: 16}
     - name: ui-icon-editor_7
       rect:
         serializedVersion: 2
@@ -171,13 +198,133 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: 2, y: -6}
+        - {x: 13, y: -5}
+        - {x: 16, y: -4}
+        - {x: 16, y: 13}
+        - {x: 9, y: 16}
+        - {x: -9, y: 16}
+        - {x: -16, y: 13}
+        - {x: -16, y: -14}
+        - {x: -15, y: -16}
+        - {x: 14, y: -16}
+        - {x: 16, y: -14}
+        - {x: 16, y: -8}
+        - {x: 14, y: -6}
+    - name: ui-icon-editor_8
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 34
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ui-icon-editor_9
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 34
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      outline: []
+    - name: ui-icon-editor_10
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 43
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 10, y: 5, z: 10, w: 5}
+      outline: []
+    - name: ui-icon-editor_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: 12}
+        - {x: -11, y: 8}
+        - {x: -12, y: 3}
+        - {x: -12, y: -5}
+        - {x: -3, y: -12}
+        - {x: 5, y: -12}
+        - {x: 12, y: -5}
+        - {x: 12, y: 5}
+        - {x: 5, y: 12}
+    - name: ui-icon-editor_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 13}
+        - {x: -14, y: 13}
+        - {x: -16, y: 8}
+        - {x: -16, y: -10}
+        - {x: -9, y: -13}
+        - {x: 5, y: -13}
+        - {x: 10, y: -11}
+        - {x: 16, y: -6}
+        - {x: 16, y: 7}
+    - name: ui-icon-editor_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: -16}
+        - {x: 15, y: -16}
+        - {x: 15, y: 15}
+        - {x: 12, y: 16}
+        - {x: -10, y: 16}
+        - {x: -16, y: 9}
+    - name: ui-icon-editor_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 15}
+        - {x: -5, y: 15}
+        - {x: -15, y: 12}
+        - {x: -15, y: -5}
+        - {x: -12, y: -14}
+        - {x: -5, y: -15}
+        - {x: 9, y: -15}
+        - {x: 14, y: -12}
+        - {x: 15, y: -5}
+        - {x: 15, y: 8}
     outline: []
   spritePackingTag: 
   userData: 

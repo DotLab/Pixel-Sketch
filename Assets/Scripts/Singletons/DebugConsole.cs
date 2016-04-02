@@ -55,4 +55,8 @@ public class DebugConsole : MonoBehaviour {
 	public static void Log (object o = null) {
 		WriteLine(o);
 	}
+
+	public static void Log (object o, string color) {
+		WriteLine("<color=" + color + ">" + o + "</color>");
+	}
 }
