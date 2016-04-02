@@ -23,6 +23,9 @@ public class UiSlideHidable : MonoBehaviour, IHidable {
 	void Awake () {
 		trans = GetComponent<RectTransform>();
 		anchoredPosition = trans.anchoredPosition;
+
+		if (LockX) ShowX = HideX = 0;
+		if (LockY) ShowY = HideY = 0;
 	}
 
 	void Start () {
@@ -74,6 +77,8 @@ public class UiSlideHidable : MonoBehaviour, IHidable {
 			yield return null;
 		}
 
-		trans.anchoredPosition = new Vector2(endX, endY);
+		trans.anchoredPosition = new Vector2(
+			LockX ? anchoredPosition.x : endX,
+			LockY ? anchoredPosition.y : endY);
 	}
 }
