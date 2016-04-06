@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EasedContentSizeFitter : MonoBehaviour {
+public class ColorTabContentFitter : MonoBehaviour {
 	[System.Serializable]
 	public class UiContent {
 		public RectTransform Trans;
@@ -77,7 +77,7 @@ public class EasedContentSizeFitter : MonoBehaviour {
 			}
 
 			time += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
+			yield return null;
 		}
 
 		trans.sizeDelta = new Vector2(trans.sizeDelta.x, targetHeight);
