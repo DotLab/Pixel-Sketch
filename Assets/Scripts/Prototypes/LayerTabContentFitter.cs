@@ -2,23 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ColorTabContentFitter : MonoBehaviour {
-	[System.Serializable]
-	public class UiContent {
-		public RectTransform Trans;
-		public bool Active = true;
-
-		public float OriginalX;
-		public float OriginalY;
-		public float TargetX;
-		public float TargetY;
-
-		public UiContent (RectTransform trans, bool active) {
-			Trans = trans;
-			Active = active;
-		}
-	}
-
+public class LayerTabContentFitter : MonoBehaviour {
 	public EasingType TransitionEasingType = EasingType.Cubic;
 	public float TransitionDuration = 0.5f;
 
@@ -28,7 +12,7 @@ public class ColorTabContentFitter : MonoBehaviour {
 	public float ShowX;
 	public float HideX;
 
-	public List<UiContent> Contents = new List<UiContent>();
+	public readonly List<LayerController> Contents = new List<LayerController>();
 
 	RectTransform trans;
 
@@ -46,13 +30,12 @@ public class ColorTabContentFitter : MonoBehaviour {
 		originalHeight = trans.rect.height;
 		targetHeight = Padding;
 		for (int i = 0; i < Contents.Count; i++) {
-			Contents[i].OriginalX = Contents[i].Trans.anchoredPosition.x;
-			Contents[i].OriginalY = Contents[i].Trans.anchoredPosition.y;
-			Contents[i].TargetX = Contents[i].Active ? ShowX : HideX;
-			Contents[i].TargetY = -targetHeight;
-			needFit |= Contents[i].OriginalX != Contents[i].TargetX || Contents[i].OriginalY != Contents[i].TargetY;
+			Contents[i].OriginalPosition = Contents[i].Trans.anchoredPosition;
+			Contents[i].TargetPosition = new Vector2(0, -targetHeight);
 
-			if (Contents[i].Active) targetHeight += Contents[i].Trans.rect.height + Spacing;
+			needFit |= Contents[i].OriginalPosition != Contents[i].TargetPosition;
+
+			if (!Contents[i].DeleteFlag) targetHeight += Contents[i].Trans.rect.height + Spacing;
 		}
 		targetHeight = targetHeight - Spacing + Padding;
 		needFit |= originalHeight != targetHeight;
@@ -71,9 +54,10 @@ public class ColorTabContentFitter : MonoBehaviour {
 
 			trans.sizeDelta = new Vector2(trans.sizeDelta.x, Mathf.Lerp(originalHeight, targetHeight, easedStep));
 			for (int i = 0; i < Contents.Count; i++) {
-				Contents[i].Trans.anchoredPosition = new Vector2(
-					Mathf.Lerp(Contents[i].OriginalX, Contents[i].TargetX, easedStep),
-					Mathf.Lerp(Contents[i].OriginalY, Contents[i].TargetY, easedStep));
+				if (!Contents[i].Controllable) continue;
+				Contents[i].Trans.anchoredPosition = Vector2.Lerp(
+					Contents[i].OriginalPosition,
+					Contents[i].TargetPosition, easedStep);
 			}
 
 			time += Time.deltaTime;
@@ -82,9 +66,8 @@ public class ColorTabContentFitter : MonoBehaviour {
 
 		trans.sizeDelta = new Vector2(trans.sizeDelta.x, targetHeight);
 		for (int i = 0; i < Contents.Count; i++) {
-			Contents[i].Trans.anchoredPosition = new Vector2(
-				Contents[i].TargetX,
-				Contents[i].TargetY);
+			if (!Contents[i].Controllable) continue;
+			Contents[i].Trans.anchoredPosition = Contents[i].TargetPosition;
 		}
 	}
 }

@@ -38,6 +38,6 @@ public struct HsvColor {
 	}
 
 	public override string ToString () {
-		return "{" + h.ToString("f2") + "," + s.ToString("f2") + "," + v.ToString("f2") + "}";
+		return "HSV(" + h.ToString("f3") + "," + s.ToString("f3") + "," + v.ToString("f3") + ")";
 	}
 }

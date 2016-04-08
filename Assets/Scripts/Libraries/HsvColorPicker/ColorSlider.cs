@@ -15,21 +15,23 @@ public class ColorSlider : ColorPickerComponent {
 		base.Awake();
 
 		slider = GetComponent<Slider>();
-		slider.onValueChanged.AddListener(OnSliderChanged);
+		slider.onValueChanged.AddListener(OnValueChanged);
 	}
 
 	public override void OnDestroy () {
 		base.Awake();
 
-		slider.onValueChanged.RemoveListener(OnSliderChanged);
+		slider.onValueChanged.RemoveListener(OnValueChanged);
 	}
 
 	public override void OnColorChanged (Color color) {
-		listen = false;
-		slider.value = Picker.GetColorValue(Type);
+		if (Picker.H != slider.normalizedValue) {
+			listen = false;
+			slider.value = Picker.GetColorValue(Type);
+		}
 	}
 
-	void OnSliderChanged (float newValue) {
+	void OnValueChanged (float newValue) {
 		if (listen) Picker.AssignColorValue(Type, newValue);
 		listen = true;
 	}

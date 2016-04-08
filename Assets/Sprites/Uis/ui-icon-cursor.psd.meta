@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 858a403e60c6cfe488d7ae9a07179400
-timeCreated: 1459320156
+timeCreated: 1460081560
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -18,6 +18,14 @@ TextureImporter:
     21300022: ui-icon-drawing_1
     21300024: ui-icon-drawing_8
     21300026: ui-icon-drawing_12
+    21300028: ui-icon-cursor_0
+    21300030: ui-icon-cursor_1
+    21300032: ui-icon-cursor_2
+    21300034: ui-icon-cursor_3
+    21300036: ui-icon-cursor_4
+    21300038: ui-icon-cursor_5
+    21300040: ui-icon-cursor_6
+    21300042: ui-icon-cursor_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,7 +60,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -64,274 +72,152 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: ui-icon-drawing_0
+    - name: ui-icon-cursor_0
       rect:
         serializedVersion: 2
         x: 0
         y: 96
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.06341204, y: 0.9371879}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 5, y: 4}
-        - {x: -12, y: 16}
-        - {x: -16, y: 16}
-        - {x: -16, y: -8}
-        - {x: -13, y: -8}
-        - {x: 3, y: -16}
-        - {x: 9, y: -16}
-        - {x: 16, y: -8}
-        - {x: 16, y: -3}
-        - {x: 8, y: 4}
-    - name: ui-icon-drawing_1
+      - - {x: 6.9708147, y: 2.0099869}
+        - {x: -2.0291853, y: 2.0099869}
+        - {x: -2.0291853, y: -25.990013}
+        - {x: 12.970815, y: -29.990013}
+        - {x: 24.970814, y: -29.990013}
+        - {x: 29.970814, y: -25.990013}
+        - {x: 29.970814, y: -16.990013}
+        - {x: 21.970814, y: -5.990013}
+    - name: ui-icon-cursor_1
       rect:
         serializedVersion: 2
         x: 32
         y: 96
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.06341204, y: 0.9371879}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -15, y: -16}
-        - {x: 8, y: -16}
-        - {x: 16, y: -12}
-        - {x: 16, y: 9}
-        - {x: 12, y: 16}
-        - {x: -16, y: 16}
-        - {x: -16, y: -15}
-    - name: ui-icon-drawing_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -8, y: 12}
-        - {x: -16, y: -1}
-        - {x: -16, y: -16}
-        - {x: 0, y: -16}
-        - {x: 12, y: -8}
-        - {x: 12, y: 9}
-        - {x: 10, y: 12}
-    - name: ui-icon-drawing_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4, y: 12}
-        - {x: -16, y: -2}
-        - {x: -16, y: -16}
-        - {x: -2, y: -16}
-        - {x: 12, y: -8}
-        - {x: 12, y: 9}
-        - {x: 6, y: 12}
-    - name: ui-icon-drawing_6
+      - - {x: -2.0291862, y: 2.0099869}
+        - {x: -2.0291862, y: -28.990013}
+        - {x: 5.9708138, y: -29.990013}
+        - {x: 29.970814, y: -29.990013}
+        - {x: 29.970814, y: -11.990013}
+        - {x: 5.9708138, y: 2.0099869}
+    - name: ui-icon-cursor_2
       rect:
         serializedVersion: 2
         x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.06341204, y: 0.9371879}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 5.9708176, y: 2.0099869}
+        - {x: -2.0291824, y: 2.0099869}
+        - {x: -2.0291824, y: -29.990013}
+        - {x: 29.970818, y: -29.990013}
+        - {x: 29.970818, y: -11.990013}
+        - {x: 27.970818, y: -10.990013}
+    - name: ui-icon-cursor_3
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 64
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -8, y: 12}
-        - {x: -16, y: -1}
-        - {x: -16, y: -16}
-        - {x: 5, y: -16}
-        - {x: 10, y: -5}
-        - {x: 10, y: 12}
-    - name: ui-icon-drawing_8
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: -8}
-        - {x: -16, y: -12}
-        - {x: -15, y: -14}
-        - {x: -10, y: -14}
-        - {x: -8, y: -13}
-        - {x: -8, y: -10}
-        - {x: -12, y: -6}
-        - {x: -14, y: -6}
-      - - {x: -8, y: -8}
-        - {x: -8, y: -14}
-        - {x: 4, y: -14}
-        - {x: 4, y: -9}
-        - {x: 2, y: -8}
-      - - {x: 10, y: -2}
-        - {x: 4, y: -9}
-        - {x: 4, y: -14}
-        - {x: 16, y: -14}
-        - {x: 16, y: -4}
-        - {x: 14, y: -2}
-      - - {x: -16, y: -6}
-        - {x: -10, y: -6}
-        - {x: -10, y: 4}
-        - {x: -11, y: 6}
-        - {x: -16, y: 6}
-      - - {x: 4, y: 14}
-        - {x: 4, y: 1}
-        - {x: 5, y: -2}
-        - {x: 16, y: -2}
-        - {x: 16, y: 13}
-        - {x: 14, y: 14}
-      - - {x: -16, y: 14}
-        - {x: -16, y: 7}
-        - {x: -14, y: 6}
-        - {x: -12, y: 6}
-        - {x: -8, y: 8}
-        - {x: -8, y: 12}
-        - {x: -9, y: 14}
-      - - {x: -6, y: 14}
-        - {x: -8, y: 12}
-        - {x: -8, y: 10}
-        - {x: -6, y: 8}
-        - {x: 2, y: 8}
-        - {x: 4, y: 10}
-        - {x: 4, y: 12}
-        - {x: 2, y: 14}
-    - name: ui-icon-drawing_9
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -11, y: 14}
-        - {x: -16, y: 8}
-        - {x: -16, y: -8}
-        - {x: -12, y: -14}
-        - {x: 9, y: -14}
-        - {x: 16, y: -11}
-        - {x: 16, y: 7}
-        - {x: 13, y: 14}
-    - name: ui-icon-drawing_10
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 12, y: -1}
-        - {x: 7, y: -3}
-        - {x: 2, y: -4}
-        - {x: 12, y: -1}
-        - {x: 14, y: -1}
-        - {x: 16, y: 1}
-        - {x: 16, y: 14}
-        - {x: -16, y: 14}
-        - {x: -16, y: -2}
-        - {x: -13, y: -14}
-        - {x: 6, y: -14}
-        - {x: 13, y: -13}
-        - {x: 16, y: -7}
-        - {x: 16, y: -1}
-    - name: ui-icon-drawing_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 14}
-        - {x: -16, y: -14}
-        - {x: 16, y: -14}
-        - {x: 16, y: 12}
-        - {x: 14, y: 14}
-      - - {x: -9, y: 7}
-        - {x: 9, y: 7}
-        - {x: 9, y: -7}
-        - {x: -9, y: -7}
-    - name: ui-icon-drawing_13
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 9, y: 14}
-        - {x: -6, y: 14}
-        - {x: -12, y: 13}
+      - - {x: -5, y: 16}
         - {x: -16, y: 10}
-        - {x: -16, y: -8}
-        - {x: -14, y: -14}
-        - {x: 9, y: -14}
-        - {x: 16, y: -7}
-        - {x: 16, y: 8}
-    - name: ui-icon-drawing_14
+        - {x: -16, y: -5}
+        - {x: -15, y: -5}
+        - {x: -6, y: -16}
+        - {x: 10, y: -16}
+        - {x: 16, y: -5}
+        - {x: 16, y: 11}
+        - {x: 12, y: 16}
+    - name: ui-icon-cursor_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.06242895, y: 0.06287766}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 25.002274, y: 26.987915}
+        - {x: 2.0022736, y: 26.987915}
+        - {x: -1.9977264, y: 17.987915}
+        - {x: -1.9977264, y: -2.012085}
+        - {x: 11.002274, y: -2.012085}
+        - {x: 25.002274, y: 7.987915}
+        - {x: 27.002274, y: 10.987915}
+        - {x: 27.002274, y: 21.987915}
+    - name: ui-icon-cursor_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.06242895, y: 0.062877655}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14.002274, y: 26.987915}
+        - {x: -1.9977264, y: 13.987915}
+        - {x: -1.9977264, y: -2.012085}
+        - {x: 13.002274, y: -2.012085}
+        - {x: 27.002274, y: 8.987915}
+        - {x: 27.002274, y: 20.987915}
+        - {x: 24.002274, y: 26.987915}
+    - name: ui-icon-cursor_6
       rect:
         serializedVersion: 2
         x: 64
-        y: 0
+        y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.06242895, y: 0.06287766}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 14}
-        - {x: -16, y: -1}
-        - {x: -13, y: -14}
-        - {x: 2, y: -14}
-        - {x: 16, y: -9}
-        - {x: 16, y: 14}
-    - name: ui-icon-drawing_15
+      - - {x: 6.0022736, y: 26.987915}
+        - {x: -1.9977264, y: 13.987915}
+        - {x: -1.9977264, y: -2.012085}
+        - {x: 18.002274, y: -2.012085}
+        - {x: 25.002274, y: 7.987915}
+        - {x: 25.002274, y: 23.987915}
+        - {x: 24.002274, y: 26.987915}
+    - name: ui-icon-cursor_7
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.06242895, y: 0.06287766}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 14, y: 14}
-        - {x: 10, y: 14}
-        - {x: -16, y: -8}
-        - {x: -16, y: -12}
-        - {x: -15, y: -14}
-        - {x: -9, y: -14}
-        - {x: 16, y: 9}
-        - {x: 16, y: 12}
+      - - {x: 13.002274, y: 26.987915}
+        - {x: -1.9977264, y: 16.987915}
+        - {x: -1.9977264, y: -2.012085}
+        - {x: 15.002274, y: -2.012085}
+        - {x: 25.002274, y: 6.987915}
+        - {x: 27.002274, y: 14.987915}
+        - {x: 27.002274, y: 26.987915}
     outline: []
   spritePackingTag: 
   userData: 

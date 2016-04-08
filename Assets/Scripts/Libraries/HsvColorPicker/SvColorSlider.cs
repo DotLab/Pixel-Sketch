@@ -76,7 +76,7 @@ public class SvColorSlider : ColorPickerComponent {
 		for (int s = 0; s < 100; s++) {
 			var colors = new Color32[100];
 			for (int v = 0; v < 100; v++) {
-				colors[v] = ColorHelper.Hsv2Rgb(h, (float)s / 100, (float)v / 100);
+				colors[v] = ColorHelper.Hsv2Rgb(h, s / 100.0, v / 100.0);
 			}
 			texture.SetPixels32(s, 0, 1, 100, colors);
 		}

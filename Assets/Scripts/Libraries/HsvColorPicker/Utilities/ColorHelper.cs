@@ -15,7 +15,7 @@ public static class ColorHelper {
 		delta = cmax - cmin;
 
 		if (delta == 0)
-			h = 360;
+			h = 6;
 		else if (cmax == r)
 			h = (g - b) / delta;
 		else if (cmax == g)
@@ -81,7 +81,17 @@ public static class ColorHelper {
 
 		return new Color((float)r, (float)g, (float)b, 1);
 	}
+	/*
+	public static HsvColor Rgb2Hsv (double r, double b, double g) {
+		float h, s, v;
+		Color.RGBToHSV(new Color((float)r, (float)b, (float)g), out h, out s, out v);
+		return new HsvColor(h, s, v);
+	}
 
+	public static Color Hsv2Rgb (double h, double s, double v) {
+		return Color.HSVToRGB((float)h, (float)s, (float)v);
+	}
+	*/
 	public static string Color2Hex (Color32 color) {
 		return string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", color.r, color.g, color.b, color.a);
 	}

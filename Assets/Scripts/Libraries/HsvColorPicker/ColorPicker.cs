@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
 public class ColorPicker : MonoBehaviour {
-	float _hue = 0;
-	float _saturation = 0;
-	float _brightness = 0;
+	public float _hue = 0;
+	public float _saturation = 0;
+	public float _brightness = 0;
 
-	float _red = 0;
-	float _green = 0;
-	float _blue = 0;
+	public float _red = 0;
+	public float _green = 0;
+	public float _blue = 0;
 
 	float _alpha = 1;
 
