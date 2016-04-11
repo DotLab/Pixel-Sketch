@@ -1,18 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Uif;
 
 public class WelcomeSceneScheduler : MonoBehaviour {
 	public const int MenuSceneIndex = 1;
 
 	public float Delay = 2;
-	public GameObject Overlay;
-	IHidable overlayHidable;
+	public Hidable Overlay;
 
-
-	void Awake () {
-		overlayHidable = Overlay.GetComponent<IHidable>();
-	}
 
 	void Start () {
 		StartCoroutine(WelcomeSceneHandler());
@@ -39,7 +35,7 @@ public class WelcomeSceneScheduler : MonoBehaviour {
 
 		yield return new WaitForSeconds(Delay);
 
-		overlayHidable.Show();
+		Overlay.Show();
 		yield return new WaitForSeconds(0.5f);
 
 		SceneManager.LoadScene(MenuSceneIndex);

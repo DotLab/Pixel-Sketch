@@ -1,180 +1,212 @@
 ﻿using UnityEngine;
 
-public class ColorPicker : MonoBehaviour {
-	public float _hue = 0;
-	public float _saturation = 0;
-	public float _brightness = 0;
+namespace HsvColorPicker {
+	[AddComponentMenu("HsvColorPicker/ColorPicker")]
+	public class ColorPicker : MonoBehaviour {
+		public delegate void OnColorChanged ();
 
-	public float _red = 0;
-	public float _green = 0;
-	public float _blue = 0;
+		public event OnColorChanged OnColorChangedEvent;
 
-	float _alpha = 1;
+		public Color _currentColor;
+		public HsvColor _currentHsvColor;
 
-	public delegate void OnColorChanged (Color color);
+		public float _hue = 0;
+		public float _saturation = 0;
+		public float _value = 0;
 
-	public event OnColorChanged OnColorChangedEvent;
+		public float _red = 0;
+		public float _green = 0;
+		public float _blue = 0;
 
-	public Color CurrentColor {
-		get { return new Color(_red, _green, _blue, _alpha); }
-		set {
-			if (CurrentColor == value) return;
+		float _alpha = 1;
 
-			_red = value.r;
-			_green = value.g;
-			_blue = value.b;
-			_alpha = value.a;
+		public Color CurrentColor {
+			get { return _currentColor; }
+			set {
+				if (_currentColor == value) return;
 
-			BuildHsvColor();
+				_red = value.r;
+				_green = value.g;
+				_blue = value.b;
+				_alpha = value.a;
+
+				OnRgbChanged();
+			}
 		}
-	}
 
-	public float R {
-		get { return _red; }
-		set {
-			if (_red == value) return;
+		public HsvColor CurrentHsvColor {
+			get { return _currentHsvColor; }
+			set {
+				if (_currentHsvColor == value) return;
 
-			_red = value;
+				_hue = value.h;
+				_saturation = value.s;
+				_value = value.v;
 
-			BuildHsvColor();
+				OnHsvChanged();
+			}
 		}
-	}
 
-	public float G {
-		get { return _green; }
-		set {
-			if (_green == value) return;
+		public float R {
+			get { return _red; }
+			set {
+				value = ColorHelper.Clump(value);
+				if (_red == value) return;
 
-			_green = value;
+				_red = value;
 
-			BuildHsvColor();
+				OnRgbChanged();
+			}
 		}
-	}
 
-	public float B {
-		get { return _blue; }
-		set {
-			if (_blue == value) return;
+		public float G {
+			get { return _green; }
+			set {
+				value = ColorHelper.Clump(value);
+				if (_green == value) return;
 
-			_blue = value;
+				_green = value;
 
-			BuildHsvColor();
+				OnRgbChanged();
+			}
 		}
-	}
 
-	public float A {
-		get { return _alpha; }
-		set { 
-			_alpha = value;
+		public float B {
+			get { return _blue; }
+			set {
+				value = ColorHelper.Clump(value);
+				if (_blue == value) return;
 
-			OnColorChangedEvent(CurrentColor);
+				_blue = value;
+
+				OnRgbChanged();
+			}
 		}
-	}
 
-	public float H {
-		get { return _hue; }
-		set {
-			value = value - (int)value;
-			if (_hue == value) return;
+		public float A {
+			get { return _alpha; }
+			set {
+				value = ColorHelper.Clump(value);
+				if (_alpha == value) return;
+				_alpha = value;
 
-			_hue = value;
-
-			BuildRgbColor();
+				OnRgbChanged();
+			}
 		}
-	}
 
-	public float S {
-		get { return _saturation; }
-		set {
-			if (_saturation == value) return;
+		public float H {
+			get { return _hue; }
+			set {
+				value = ColorHelper.Clump(value, true);
+				if (_hue == value) return;
 
-			_saturation = value;
+				_hue = value;
 
-			BuildRgbColor();
+				OnHsvChanged();
+			}
 		}
-	}
 
-	public float V {
-		get { return _brightness; }
-		set {
-			if (_brightness == value) return;
+		public float S {
+			get { return _saturation; }
+			set {
+				value = ColorHelper.Clump(value);
+				if (_saturation == value) return;
 
-			_brightness = value;
+				_saturation = value;
 
-			BuildRgbColor();
+				OnHsvChanged();
+			}
 		}
-	}
 
-	void Start () {
-		OnColorChangedEvent(CurrentColor);
-	}
+		public float V {
+			get { return _value; }
+			set {
+				value = ColorHelper.Clump(value);
+				if (_value == value) return;
 
-	void BuildHsvColor () {
-		var color = ColorHelper.Rgb2Hsv(_red, _green, _blue);
+				_value = value;
 
-		_hue = color.H;
-		_saturation = color.S;
-		_brightness = color.V;
-
-		OnColorChangedEvent(CurrentColor);
-	}
-
-	void BuildRgbColor () {
-		var color = ColorHelper.Hsv2Rgb(_hue * 360, _saturation, _brightness);
-
-		_red = color.r;
-		_green = color.g;
-		_blue = color.b;
-
-		OnColorChangedEvent(CurrentColor);
-	}
-
-	public void AssignColorValue (ColorValueType type, float value) {
-		switch (type) {
-		case ColorValueType.R:
-			R = value;
-			break;
-		case ColorValueType.G:
-			G = value;
-			break;
-		case ColorValueType.B:
-			B = value;
-			break;
-		case ColorValueType.A:
-			A = value;
-			break;
-		case ColorValueType.H:
-			H = value;
-			break;
-		case ColorValueType.S:
-			S = value;
-			break;
-		case ColorValueType.V:
-			V = value;
-			break;
-		default:
-			throw new System.NotImplementedException();
+				OnHsvChanged();
+			}
 		}
-	}
 
-	public float GetColorValue (ColorValueType type) {
-		switch (type) {
-		case ColorValueType.R:
-			return R;
-		case ColorValueType.G:
-			return G;
-		case ColorValueType.B:
-			return B;
-		case ColorValueType.A:
-			return A;
-		case ColorValueType.H:
-			return H;
-		case ColorValueType.S:
-			return S;
-		case ColorValueType.V:
-			return V;
-		default:
-			throw new System.NotImplementedException();
+		void Start () {
+			_currentColor = new Color(_red, _green, _blue, _alpha);
+			_currentHsvColor = new HsvColor(_hue, _saturation, _value);
+
+			if (OnColorChangedEvent != null) OnColorChangedEvent();
+		}
+
+		void OnRgbChanged () {
+			_currentColor = new Color(_red, _green, _blue, _alpha);
+			_currentHsvColor = ColorHelper.Rgb2Hsv(_red, _green, _blue);
+
+			_hue = _currentHsvColor.h;
+			_saturation = _currentHsvColor.s;
+			_value = _currentHsvColor.v;
+
+			if (OnColorChangedEvent != null) OnColorChangedEvent();
+		}
+
+		void OnHsvChanged () {
+			_currentColor = ColorHelper.Hsv2Rgb(_hue, _saturation, _value);
+			_currentColor.a = _alpha;
+			_currentHsvColor = new HsvColor(_hue, _saturation, _value);
+
+			_red = _currentColor.r;
+			_green = _currentColor.g;
+			_blue = _currentColor.b;
+
+			if (OnColorChangedEvent != null) OnColorChangedEvent();
+		}
+
+		public void SetColorParam (ColorParamType type, float value) {
+			switch (type) {
+			case ColorParamType.R:
+				R = value;
+				break;
+			case ColorParamType.G:
+				G = value;
+				break;
+			case ColorParamType.B:
+				B = value;
+				break;
+			case ColorParamType.A:
+				A = value;
+				break;
+			case ColorParamType.H:
+				H = value;
+				break;
+			case ColorParamType.S:
+				S = value;
+				break;
+			case ColorParamType.V:
+				V = value;
+				break;
+			default:
+				throw new System.NotImplementedException();
+			}
+		}
+
+		public float GetColorParam (ColorParamType type) {
+			switch (type) {
+			case ColorParamType.R:
+				return R;
+			case ColorParamType.G:
+				return G;
+			case ColorParamType.B:
+				return B;
+			case ColorParamType.A:
+				return A;
+			case ColorParamType.H:
+				return H;
+			case ColorParamType.S:
+				return S;
+			case ColorParamType.V:
+				return V;
+			default:
+				throw new System.NotImplementedException();
+			}
 		}
 	}
 }

@@ -1,43 +1,39 @@
-﻿using System;
+﻿namespace HsvColorPicker {
+	// Describes a color in terms of
+	// Hue, Saturation, and Value (brightness)
+	public struct HsvColor {
+		public readonly float h;
+		public readonly float s;
+		public readonly float v;
 
-// Describes a color in terms of
-// Hue, Saturation, and Value (brightness)
-public struct HsvColor {
-	/// The Hue, ranges between 0 and 360
-	public float H {
-		get { return h; }
-		set {
-			h = value - (int)value; 
-			if (h < 0) h += 1;
+		public HsvColor (float h, float s, float v) {
+			this.h = ColorHelper.Clump(h, true);
+			this.s = ColorHelper.Clump(s);
+			this.v = ColorHelper.Clump(v);
 		}
-	}
 
-	/// The Saturation, ranges between 0 and 1
-	public float S {
-		get { return s; }
-		set { s = value; }
-	}
+		public override bool Equals (object obj) {
+			if (obj is HsvColor) {
+				var hsvColor = (HsvColor)obj;
+				return hsvColor.h == h && hsvColor.s == s && hsvColor.v == v;
+			}
+			return false;
+		}
 
-	// The Value (Brightness), ranges between 0 and 1
-	public float V {
-		get { return v; }
-		set { v = value; }
-	}
+		public override int GetHashCode () {
+			return (int)(h * 1000000 + s * 10000 + v * 100);
+		}
 
-	float h;
-	float s;
-	float v;
+		public override string ToString () {
+			return "HSV(" + h.ToString("f3") + "," + s.ToString("f3") + "," + v.ToString("f3") + ")";
+		}
 
-	public HsvColor (float h, float s, float v) {
-		this.h = h / 360;
-		if (h > 1) h -= 1;
-		if (h < 0) h += 1;
+		public static bool operator == (HsvColor left, HsvColor right) {
+			return left.Equals(right);
+		}
 
-		this.s = s;
-		this.v = v;
-	}
-
-	public override string ToString () {
-		return "HSV(" + h.ToString("f3") + "," + s.ToString("f3") + "," + v.ToString("f3") + ")";
+		public static bool operator != (HsvColor left, HsvColor right) {
+			return !left.Equals(right);
+		}
 	}
 }

@@ -1,19 +1,36 @@
 ﻿using UnityEngine;
 
-public abstract class ColorPickerComponent : MonoBehaviour {
-	public ColorPicker Picker;
+namespace HsvColorPicker {
+	public abstract class ColorPickerComponent : MonoBehaviour {
+		public ColorPicker Picker;
 
-	public virtual void Awake () {
-		Picker.OnColorChangedEvent += OnColorChanged;
+		void Awake () {
+			Picker.OnColorChangedEvent += OnColorChanged;
+
+			OnInit();
+		}
+
+		void OnValidate () {
+			if (Picker == null) Picker = GetComponentInParent<ColorPicker>();
+
+			OnEditorChanged();
+		}
+
+		void OnDestroy () {
+			Picker.OnColorChangedEvent -= OnColorChanged;
+
+			OnDeinit();
+		}
+
+		public virtual void OnInit () {
+		}
+
+		public virtual void OnDeinit () {
+		}
+
+		public virtual void OnEditorChanged () {
+		}
+
+		public abstract void OnColorChanged ();
 	}
-
-	public virtual void OnValidate () {
-		if (Picker == null) Picker = GetComponentInParent<ColorPicker>();
-	}
-
-	public virtual void OnDestroy () {
-		Picker.OnColorChangedEvent -= OnColorChanged;
-	}
-
-	public abstract void OnColorChanged (Color color);
 }

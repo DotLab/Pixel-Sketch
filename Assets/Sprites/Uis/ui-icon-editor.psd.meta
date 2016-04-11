@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: afa8ce672d80a3144bb653d135ae6e14
-timeCreated: 1459604057
+timeCreated: 1460360611
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -229,14 +229,20 @@ TextureImporter:
     - name: ui-icon-editor_9
       rect:
         serializedVersion: 2
-        x: 34
-        y: 34
-        width: 28
-        height: 28
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
-      outline: []
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14, y: 16}
+        - {x: -14, y: -16}
+        - {x: 12, y: -16}
+        - {x: 14, y: 2}
+        - {x: 14, y: 15}
+        - {x: 11, y: 16}
     - name: ui-icon-editor_10
       rect:
         serializedVersion: 2
@@ -316,13 +322,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -14}
-        - {x: -11, y: -16}
-        - {x: 7, y: -16}
-        - {x: 12, y: -15}
-        - {x: 16, y: -14}
-        - {x: 16, y: 16}
+      - - {x: 6, y: 16}
+        - {x: -6, y: 16}
+        - {x: -16, y: 14}
+        - {x: -16, y: -15}
+        - {x: -13, y: -16}
+        - {x: 14, y: -16}
+        - {x: 16, y: -6}
+        - {x: 16, y: 9}
+        - {x: 11, y: 14}
     - name: ui-icon-editor_15
       rect:
         serializedVersion: 2
@@ -334,10 +342,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 16}
+      - - {x: -16, y: 15}
+        - {x: -16, y: -15}
+        - {x: 16, y: -15}
+        - {x: 16, y: 15}
     outline: []
   spritePackingTag: 
   userData: 

@@ -1,24 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class ColorLabel : ColorPickerComponent {
-	public ColorValueType Type;
+namespace HsvColorPicker {
+	[AddComponentMenu("HsvColorPicker/ColorLabel")]
+	[RequireComponent(typeof(Text))]
+	public class ColorLabel : ColorPickerComponent {
+		public ColorParamType Type;
 
-	public string Prefix = "R: ";
-	public float MinValue = 0;
-	public float MaxValue = 255;
+		public string Prefix = "";
+		public float MinValue = 0;
+		public float MaxValue = 255;
 
-	Text label;
+		Text label;
 
-	public override void Awake () {
-		base.Awake();
+		public override void OnInit () {
+			label = GetComponent<Text>();
+		}
 
-		label = GetComponent<Text>();
-	}
-
-	public override void OnColorChanged (Color color) {
-		var value = MinValue + (Picker.GetColorValue(Type) * (MaxValue - MinValue));
-		label.text = Prefix + Mathf.FloorToInt(value);
+		public override void OnColorChanged () {
+			var value = MinValue + (Picker.GetColorParam(Type) * (MaxValue - MinValue));
+			label.text = Prefix + Mathf.FloorToInt(value);
+		}
 	}
 }
