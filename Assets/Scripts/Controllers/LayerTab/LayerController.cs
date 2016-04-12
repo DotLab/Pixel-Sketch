@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using System.Collections.Generic;
@@ -22,20 +23,58 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 	public event OnLayerStateChange OnLayerDragedEvent;
 	public event OnLayerStateChange OnLayerReleasedEvent;
 
-	public Colorable Colorable;
+	public RawImage Thumbnail;
 	public ColorSwapable ColorSwapable;
+
+	public ColorSwapable HideIcon;
+	public ColorSwapable LockIcon;
+
+	public Color NormalColor = Color.white;
+	public Color SelectedColor = Color.cyan;
 
 	public bool IsLayer = true;
 	public bool DeleteFlag;
 
+	public bool Hided;
+	public bool Locked;
+
 	Vector2 startPosition;
 	Vector2 positionDelta;
+
+	void OnValidate () {
+		if (ColorSwapable == null) ColorSwapable = GetComponent<ColorSwapable>();
+	}
+
+	#region Layer UI Logic
+
+	public void OnHideButtonClicked () {
+		Hided = !Hided;
+		HideIcon.Swap(Hided ? SelectedColor : NormalColor);
+	}
+
+	public void OnLockButtonClicked () {
+		Locked = !Locked;
+		LockIcon.Swap(Locked ? SelectedColor : NormalColor);
+	}
 
 	public override void Init (Transform parent, Vector2 position) {
 		base.Init(parent, position);
 
-		Colorable.SetColor(Color.clear);
+		ColorSwapable.SilentSwap(Color.clear);
+		HideIcon.SilentSwap(Color.clear);
+		LockIcon.SilentSwap(Color.clear);
+
 		ColorSwapable.Swap(Color.white);
+		HideIcon.Swap(Color.white);
+		LockIcon.Swap(Color.white);
+	}
+
+	public void Deinit () {
+		ColorSwapable.Swap(Color.clear);
+		HideIcon.Swap(Color.clear);
+		LockIcon.Swap(Color.clear);
+
+		Destroy(gameObject, 0.5f);
 	}
 
 	public void SetDeleteFlag () {
@@ -43,6 +82,8 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 		DeleteFlag = true;
 
 		ColorSwapable.Swap(Color.red);
+		HideIcon.Swap(Color.red);
+		LockIcon.Swap(Color.red);
 	}
 
 	public void ResetDeleteFlag () {
@@ -50,12 +91,8 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 		DeleteFlag = false;
 
 		ColorSwapable.Swap(Color.white);
-	}
-
-	public void Deinit () {
-		ColorSwapable.Swap(Color.clear);
-
-		Destroy(gameObject, 0.5f);
+		HideIcon.Swap(Hided ? SelectedColor : NormalColor);
+		LockIcon.Swap(Locked ? SelectedColor : NormalColor);
 	}
 
 	public void OnPointerClick (PointerEventData eventData) {
@@ -83,4 +120,6 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 
 		if (OnLayerReleasedEvent != null) OnLayerReleasedEvent(this);
 	}
+
+	#endregion
 }

@@ -89,7 +89,6 @@ public class ColorSwatchController : MonoBehaviour {
 	}
 
 	bool IsDeletable (RectContent colorCard) {
-		DebugConsole.Log(Vector2.Distance(colorCard.CurrentPosition, deleteAreaRect.anchoredPosition));
 		return Vector2.Distance(colorCard.CurrentPosition, deleteAreaRect.anchoredPosition) < 100;
 	}
 }

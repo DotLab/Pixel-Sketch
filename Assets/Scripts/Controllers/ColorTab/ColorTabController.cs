@@ -75,9 +75,7 @@ public class ColorTabController : MonoBehaviour {
 	
 		var height = Padding;
 		for (int i = 0; i < 3; i++) {
-			subTabs[i].TargetPosition = new Vector2(
-				subTabs[i].Active ? ActiveX : InactiveX,
-				-height);
+			subTabs[i].TargetPosition = new Vector2(subTabs[i].Active ? ActiveX : InactiveX, -height);
 			subTabs[i].OriginalPosition = subTabs[i].CurrentPosition;
 			needFit |= subTabs[i].OriginalPosition != subTabs[i].TargetPosition;
 

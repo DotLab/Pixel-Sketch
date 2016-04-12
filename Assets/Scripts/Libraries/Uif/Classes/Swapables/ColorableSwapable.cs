@@ -2,18 +2,20 @@
 using System.Collections;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Swapable/ColorableSwapable")]
+	[AddComponentMenu("Uif/Swapable/Colorable Swapable")]
 	[RequireComponent(typeof(Colorable))]
 	public class ColorableSwapable : ColorSwapable {
 		public Colorable Colorable;
 
+		Color lastColor;
 
 		void OnValidate () {
 			Colorable = GetComponent<Colorable>();
 		}
 
 		public override void Swap (Color newColor) {
-			if (Colorable.GetColor() == newColor) return;
+			if (Colorable.GetColor() == newColor && lastColor == newColor) return;
+			lastColor = newColor;
 
 			StopAllCoroutines();
 			StartCoroutine(SwapHandler(Colorable.GetColor(), newColor));

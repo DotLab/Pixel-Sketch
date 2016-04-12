@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-using System.Collections.Generic;
-
 using Uif;
 
 public class LayerTabController : MonoBehaviour {
@@ -16,6 +14,9 @@ public class LayerTabController : MonoBehaviour {
 	[Space]
 	public Hidable DeleteArea;
 	RectTransform deleteAreaRect;
+
+	[Space]
+	public LayerController SelectedLayer;
 
 	void Awake () {
 		deleteAreaRect = DeleteArea.GetComponent<RectTransform>();
@@ -50,9 +51,15 @@ public class LayerTabController : MonoBehaviour {
 		LayerTabFitter.Fit();
 	}
 
+
+
+	#region Layer Controller Callback
+
 	public void OnLayerClicked (LayerController layer) {
-		if (!layer.DeleteFlag && layer.Controllable)
-		if (!layer.IsLayer) AddLayer();
+		if (!layer.DeleteFlag && layer.Controllable) {
+			if (!layer.IsLayer) AddLayer();
+			SelectedLayer = layer;
+		}
 	}
 
 	public void OnLayerPressed (LayerController layer) {
@@ -83,6 +90,8 @@ public class LayerTabController : MonoBehaviour {
 
 		LayerTabFitter.Fit();
 	}
+
+	#endregion
 
 	bool IsDeletable (LayerController layer) {
 		return layer.IsLayer && Vector2.Distance(layer.CurrentPosition, deleteAreaRect.anchoredPosition) < 100;
