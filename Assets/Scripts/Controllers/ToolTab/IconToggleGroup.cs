@@ -16,7 +16,10 @@ public class IconToggleGroup : MonoBehaviour {
 
 	void Start () {
 		if (0 <= StartSelection && StartSelection < Icons.Length) {
-			OnClicked(StartSelection);
+			for (int i = 0; i < Icons.Length; i++) {
+				if (i == StartSelection) Icons[i].Swap(SelectedColor);
+				else Icons[i].Swap(NormalColor);
+			}
 		}
 	}
 

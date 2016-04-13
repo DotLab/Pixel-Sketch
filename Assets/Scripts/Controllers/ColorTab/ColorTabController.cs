@@ -2,7 +2,13 @@
 
 using System.Collections;
 
+using HsvColorPicker;
+
 public class ColorTabController : MonoBehaviour {
+	public delegate void OnColorChanged (Color newColor);
+
+	public event OnColorChanged OnColorChangedEvent;
+
 	[System.Serializable]
 	public class SubTab {
 		public RectTransform Trans;
@@ -39,9 +45,10 @@ public class ColorTabController : MonoBehaviour {
 	public float InactiveX;
 
 	[Space]
-	public RectTransform ColorViewer;
-	public RectTransform ColorPicker;
-	public RectTransform ColorSwatch;
+	public ColorPicker ColorPicker;
+	public RectTransform ColorViewerRect;
+	public RectTransform ColorPickerRect;
+	public RectTransform ColorSwatchRect;
 
 	RectTransform trans;
 
@@ -53,10 +60,16 @@ public class ColorTabController : MonoBehaviour {
 	void Awake () {
 		trans = GetComponent<RectTransform>();
 
+		ColorPicker.OnColorChangedEvent += OnColorPickerChenged;
+
 		subTabs = new SubTab[3];
-		subTabs[0] = new SubTab(ColorViewer);
-		subTabs[1] = new SubTab(ColorPicker);
-		subTabs[2] = new SubTab(ColorSwatch);
+		subTabs[0] = new SubTab(ColorViewerRect);
+		subTabs[1] = new SubTab(ColorPickerRect);
+		subTabs[2] = new SubTab(ColorSwatchRect);
+	}
+
+	public void OnColorPickerChenged () {
+		if (OnColorChangedEvent != null) OnColorChangedEvent(ColorPicker.CurrentColor);
 	}
 
 	public void OnColorPickerIconClicked () {

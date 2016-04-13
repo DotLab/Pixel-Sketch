@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LayerTabContentFitter : MonoBehaviour {
+
 	public EasingType TransitionEasingType = EasingType.Cubic;
 	public float TransitionDuration = 0.5f;
 
@@ -29,6 +30,8 @@ public class LayerTabContentFitter : MonoBehaviour {
 
 		var height = Padding;
 		for (int i = 0; i < Layers.Count; i++) {
+			Layers[i].Index = i;
+
 			Layers[i].TargetPosition = new Vector2(0, -height);
 			Layers[i].OriginalPosition = Layers[i].CurrentPosition;
 			needFit |= Layers[i].OriginalPosition != Layers[i].TargetPosition;

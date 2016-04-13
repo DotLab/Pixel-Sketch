@@ -3,6 +3,17 @@
 using Uif;
 
 public class LayerTabController : MonoBehaviour {
+	public delegate void OnLayerOrderChanged (LayerController[] layers);
+
+	public event LayerController.OnLayerChange OnLayerSelectedEvent;
+	public event OnLayerOrderChanged OnLayerOrderChangedEvent;
+
+	public event LayerController.OnLayerChange OnLayerAddEvent;
+	public event LayerController.OnLayerChange OnLayerDeleteEvent;
+
+	public event LayerController.OnLayerChange OnLayerHideStateChangedEvent;
+	public event LayerController.OnLayerChange OnLayerLockStateChangedEvent;
+
 	public const int MaxLayerCount = 7;
 
 	public LayerTabContentFitter LayerTabFitter;
@@ -15,8 +26,17 @@ public class LayerTabController : MonoBehaviour {
 	public Hidable DeleteArea;
 	RectTransform deleteAreaRect;
 
-	[Space]
-	public LayerController SelectedLayer;
+	public LayerController SelectedLayer {
+		get { return _selectedLayer; }
+		set {
+			if (value == _selectedLayer) return;
+			if (OnLayerSelectedEvent != null) OnLayerSelectedEvent(value);
+
+			_selectedLayer = value;
+		}
+	}
+
+	LayerController _selectedLayer;
 
 	void Awake () {
 		deleteAreaRect = DeleteArea.GetComponent<RectTransform>();
@@ -36,8 +56,8 @@ public class LayerTabController : MonoBehaviour {
 		LayerTabFitter.Fit();
 	}
 
-	public void AddLayer () {
-		if (LayerTabFitter.Layers.Count >= MaxLayerCount) return;
+	public LayerController AddLayer () {
+		if (LayerTabFitter.Layers.Count >= MaxLayerCount) return null;
 
 		var layer = Instantiate(LayerPrototype);
 		var layerController = layer.GetComponent<LayerController>();
@@ -45,20 +65,27 @@ public class LayerTabController : MonoBehaviour {
 		layerController.OnLayerPressedEvent += OnLayerPressed;
 		layerController.OnLayerDragedEvent += OnLayerDraged;
 		layerController.OnLayerReleasedEvent += OnLayerReleased;
+		layerController.OnLayerHideStateChangedEvent += OnLayerHideStateChangedEvent;
+		layerController.OnLayerLockStateChangedEvent += OnLayerLockStateChangedEvent;
 		layerController.Init(transform, AddButton.CurrentPosition);
 
 		LayerTabFitter.Layers.Insert(LayerTabFitter.Layers.IndexOf(AddButton) + 1, layerController);
 		LayerTabFitter.Fit();
+
+		if (OnLayerAddEvent != null) OnLayerAddEvent(layerController);
+		if (OnLayerOrderChangedEvent != null) OnLayerOrderChangedEvent(LayerTabFitter.Layers.ToArray());
+
+		return layerController;
 	}
-
-
 
 	#region Layer Controller Callback
 
 	public void OnLayerClicked (LayerController layer) {
 		if (!layer.DeleteFlag && layer.Controllable) {
-			if (!layer.IsLayer) AddLayer();
-			SelectedLayer = layer;
+			if (!layer.IsLayer) {
+				var newLayer = AddLayer();
+				if (newLayer != null) SelectedLayer = newLayer;
+			} else SelectedLayer = layer;
 		}
 	}
 
@@ -74,6 +101,7 @@ public class LayerTabController : MonoBehaviour {
 		LayerTabFitter.Layers.Sort(new LayerController.PositionComparer());
 		if (LayerTabFitter.Layers.IndexOf(layer) != index) {
 			LayerTabFitter.Fit();
+			if (OnLayerOrderChangedEvent != null) OnLayerOrderChangedEvent(LayerTabFitter.Layers.ToArray());
 		}
 	}
 
@@ -86,9 +114,11 @@ public class LayerTabController : MonoBehaviour {
 		if (layer.DeleteFlag) {
 			LayerTabFitter.Layers.Remove(layer);
 			layer.Deinit();
+			if (OnLayerDeleteEvent != null) OnLayerDeleteEvent(layer);
 		}
 
 		LayerTabFitter.Fit();
+		if (OnLayerOrderChangedEvent != null) OnLayerOrderChangedEvent(LayerTabFitter.Layers.ToArray());
 	}
 
 	#endregion

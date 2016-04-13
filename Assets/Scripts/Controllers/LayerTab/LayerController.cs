@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using System.Collections.Generic;
@@ -16,14 +15,17 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 		}
 	}
 
-	public delegate void OnLayerStateChange (LayerController layer);
+	public delegate void OnLayerChange (LayerController layer);
 
-	public event OnLayerStateChange OnLayerClickedEvent;
-	public event OnLayerStateChange OnLayerPressedEvent;
-	public event OnLayerStateChange OnLayerDragedEvent;
-	public event OnLayerStateChange OnLayerReleasedEvent;
+	public event OnLayerChange OnLayerClickedEvent;
+	public event OnLayerChange OnLayerPressedEvent;
+	public event OnLayerChange OnLayerDragedEvent;
+	public event OnLayerChange OnLayerReleasedEvent;
 
-	public RawImage Thumbnail;
+	public event OnLayerChange OnLayerHideStateChangedEvent;
+	public event OnLayerChange OnLayerLockStateChangedEvent;
+
+
 	public ColorSwapable ColorSwapable;
 
 	public ColorSwapable HideIcon;
@@ -32,6 +34,7 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 	public Color NormalColor = Color.white;
 	public Color SelectedColor = Color.cyan;
 
+	public int Index;
 	public bool IsLayer = true;
 	public bool DeleteFlag;
 
@@ -50,11 +53,13 @@ public class LayerController : RectContent, IPointerClickHandler, IBeginDragHand
 	public void OnHideButtonClicked () {
 		Hided = !Hided;
 		HideIcon.Swap(Hided ? SelectedColor : NormalColor);
+		if (OnLayerHideStateChangedEvent != null) OnLayerHideStateChangedEvent(this);
 	}
 
 	public void OnLockButtonClicked () {
 		Locked = !Locked;
 		LockIcon.Swap(Locked ? SelectedColor : NormalColor);
+		if (OnLayerLockStateChangedEvent != null) OnLayerLockStateChangedEvent(this);
 	}
 
 	public override void Init (Transform parent, Vector2 position) {

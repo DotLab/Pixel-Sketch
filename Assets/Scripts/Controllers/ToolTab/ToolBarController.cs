@@ -4,19 +4,19 @@ using Uif;
 public class ToolBarController : MonoBehaviour {
 	public delegate void OnDrawingToolChanged (ToolType newToolType);
 
-	public event OnDrawingToolChanged OnDrawingToolChangedEvent;
+	public event OnDrawingToolChanged OnToolChangedEvent;
 
 	public ToolType CurrentToolType {
 		get { return _currentToolType; }
 		set {
 			if (value == _currentToolType) return;
-			if (OnDrawingToolChangedEvent != null) OnDrawingToolChangedEvent(value);
+			if (OnToolChangedEvent != null) OnToolChangedEvent(value);
 
 			_currentToolType = value;
 		}
 	}
 
-	public ToolType _currentToolType = ToolType.PencilPaintTool;
+	public ToolType _currentToolType;
 
 	public ToolType SelectToolType = ToolType.RectSelectTool;
 	public ToolType PaintToolType = ToolType.PencilPaintTool;
@@ -56,6 +56,10 @@ public class ToolBarController : MonoBehaviour {
 		selectToolHidable = SelectToolGroup.GetComponent<IHidable>();
 		paintToolHidable = PaintToolGroup.GetComponent<IHidable>();
 		shapeToolHidable = ShapeToolGroup.GetComponent<IHidable>();
+	}
+
+	void Start () {
+		CurrentToolType = ToolType.MoveTool;
 	}
 
 	public void OnDrawingIconClicked (int index) {
