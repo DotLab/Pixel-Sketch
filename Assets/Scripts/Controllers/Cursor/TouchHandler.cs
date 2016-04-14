@@ -22,12 +22,13 @@ public class TouchHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 	}
 
 	public void OnDrag (PointerEventData eventData) {
+		var delta = (eventData).delta * (600.0f / Screen.height);
 		if (MainTouchPressed && eventData.pointerId == MainTouchId) {
-			Cursor.MoveCursor(eventData.delta);
+			Cursor.MoveCursor(delta);
 		}
 
 		if (AsistTouchPressed && eventData.pointerId == AsistTouchId) {
-			Cursor.NudgeCursor(eventData.delta);
+			Cursor.NudgeCursor(delta);
 		}
 	}
 

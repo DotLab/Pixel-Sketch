@@ -5,11 +5,11 @@ using Uif;
 public class LayerTabController : MonoBehaviour {
 	public delegate void OnLayerOrderChanged (LayerController[] layers);
 
-	public event LayerController.OnLayerChange OnLayerSelectedEvent;
-	public event OnLayerOrderChanged OnLayerOrderChangedEvent;
-
 	public event LayerController.OnLayerChange OnLayerAddEvent;
 	public event LayerController.OnLayerChange OnLayerDeleteEvent;
+
+	public event LayerController.OnLayerChange OnLayerSelectedEvent;
+	public event OnLayerOrderChanged OnLayerOrderChangedEvent;
 
 	public event LayerController.OnLayerChange OnLayerHideStateChangedEvent;
 	public event LayerController.OnLayerChange OnLayerLockStateChangedEvent;
@@ -23,6 +23,7 @@ public class LayerTabController : MonoBehaviour {
 	public GameObject LayerPrototype;
 
 	[Space]
+	public RectTransform LayerTabRect;
 	public Hidable DeleteArea;
 	RectTransform deleteAreaRect;
 
@@ -31,6 +32,11 @@ public class LayerTabController : MonoBehaviour {
 		set {
 			if (value == _selectedLayer) return;
 			if (OnLayerSelectedEvent != null) OnLayerSelectedEvent(value);
+			foreach (var layer in LayerTabFitter.Layers) {
+				if (!layer.IsLayer) continue;
+				if (layer == value) layer.OnLayerSelected();
+				else layer.OnLayerDeselected();
+			}
 
 			_selectedLayer = value;
 		}
@@ -51,7 +57,8 @@ public class LayerTabController : MonoBehaviour {
 		AddButton.OnLayerReleasedEvent += OnLayerReleased;
 		LayerTabFitter.Layers.Add(AddButton);
 
-		AddLayer();
+		var newLayer = AddLayer();
+		if (newLayer != null) SelectedLayer = newLayer;
 
 		LayerTabFitter.Fit();
 	}
@@ -67,7 +74,7 @@ public class LayerTabController : MonoBehaviour {
 		layerController.OnLayerReleasedEvent += OnLayerReleased;
 		layerController.OnLayerHideStateChangedEvent += OnLayerHideStateChangedEvent;
 		layerController.OnLayerLockStateChangedEvent += OnLayerLockStateChangedEvent;
-		layerController.Init(transform, AddButton.CurrentPosition);
+		layerController.Init(LayerTabRect, AddButton.CurrentPosition);
 
 		LayerTabFitter.Layers.Insert(LayerTabFitter.Layers.IndexOf(AddButton) + 1, layerController);
 		LayerTabFitter.Fit();
@@ -112,6 +119,9 @@ public class LayerTabController : MonoBehaviour {
 		DeleteArea.Hide();
 
 		if (layer.DeleteFlag) {
+			if (_selectedLayer) {
+				_selectedLayer = null;
+			}
 			LayerTabFitter.Layers.Remove(layer);
 			layer.Deinit();
 			if (OnLayerDeleteEvent != null) OnLayerDeleteEvent(layer);

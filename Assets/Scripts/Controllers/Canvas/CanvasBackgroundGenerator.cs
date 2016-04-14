@@ -18,6 +18,10 @@ public class CanvasBackgroundGenerator : MonoBehaviour {
 		GenerateBackground();
 	}
 
+	void OnRectTransformDimensionsChange () {
+		GenerateBackground();
+	}
+
 	[ContextMenu("Generate Background")]
 	public void GenerateBackground () {
 		var gridCountX = (int)(Canvas.rect.width / GridSize + 0.5f);

@@ -46,11 +46,10 @@ public class ColorTabController : MonoBehaviour {
 
 	[Space]
 	public ColorPicker ColorPicker;
+	public RectTransform ColorTabRect;
 	public RectTransform ColorViewerRect;
 	public RectTransform ColorPickerRect;
 	public RectTransform ColorSwatchRect;
-
-	RectTransform trans;
 
 	SubTab[] subTabs;
 
@@ -58,8 +57,6 @@ public class ColorTabController : MonoBehaviour {
 	float targetHeight;
 
 	void Awake () {
-		trans = GetComponent<RectTransform>();
-
 		ColorPicker.OnColorChangedEvent += OnColorPickerChenged;
 
 		subTabs = new SubTab[3];
@@ -97,7 +94,7 @@ public class ColorTabController : MonoBehaviour {
 		}
 
 		targetHeight = height - Spacing + Padding;
-		originalHeight = trans.sizeDelta.y;
+		originalHeight = ColorTabRect.sizeDelta.y;
 		needFit |= originalHeight != targetHeight;
 
 		if (needFit) {
@@ -112,8 +109,8 @@ public class ColorTabController : MonoBehaviour {
 		while (time < TransitionDuration) {
 			var easedStep = Easing.EaseInOut(time / TransitionDuration, TransitionEasingType);
 
-			trans.sizeDelta = new Vector2(
-				trans.sizeDelta.x,
+			ColorTabRect.sizeDelta = new Vector2(
+				ColorTabRect.sizeDelta.x,
 				Mathf.Lerp(originalHeight, targetHeight, easedStep));
 			for (int i = 0; i < 3; i++) {
 				subTabs[i].CurrentPosition = Vector2.Lerp(
@@ -125,7 +122,7 @@ public class ColorTabController : MonoBehaviour {
 			yield return null;
 		}
 
-		trans.sizeDelta = new Vector2(trans.sizeDelta.x, targetHeight);
+		ColorTabRect.sizeDelta = new Vector2(ColorTabRect.sizeDelta.x, targetHeight);
 		for (int i = 0; i < 3; i++) {
 			subTabs[i].CurrentPosition = subTabs[i].TargetPosition;
 		}

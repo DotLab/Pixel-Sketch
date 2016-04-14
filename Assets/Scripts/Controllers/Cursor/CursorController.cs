@@ -63,8 +63,8 @@ public class CursorController : MonoBehaviour {
 	public void MoveCursor (Vector2 delta) {
 		var targetPosition = CursorTransform.anchoredPosition + delta;
 
-		targetPosition.x = Clump(0, trans.rect.width, targetPosition.x);
-		targetPosition.y = Clump(0, trans.rect.height, targetPosition.y);
+		targetPosition.x = Clump(trans.rect.xMin, trans.rect.xMax, targetPosition.x);
+		targetPosition.y = Clump(trans.rect.yMin, trans.rect.yMax, targetPosition.y);
 
 		CursorTransform.anchoredPosition = targetPosition;
 
