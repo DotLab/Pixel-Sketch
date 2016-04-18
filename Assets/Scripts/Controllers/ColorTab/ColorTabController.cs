@@ -26,7 +26,7 @@ public class ColorTabController : MonoBehaviour {
 		}
 	}
 
-	public delegate void OnColorChanged (Color newColor);
+	public delegate void OnColorChanged (Color color);
 
 	public event OnColorChanged OnColorChangedEvent;
 

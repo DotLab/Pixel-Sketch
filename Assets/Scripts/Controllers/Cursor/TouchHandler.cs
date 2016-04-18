@@ -33,7 +33,6 @@ public class TouchHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 	}
 
 	public void OnPointerUp (PointerEventData eventData) {
-		//		DebugConsole.Log("OnPointerUp " + eventData.pointerId);
 		if (eventData.pointerId == MainTouchId) {
 			MainTouchPressed = false;
 		} else if (eventData.pointerId == AsistTouchId) {

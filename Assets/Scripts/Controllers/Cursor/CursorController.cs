@@ -11,11 +11,13 @@ public class CursorController : MonoBehaviour {
 		public Sprite Sprite;
 	}
 
-	public delegate void OnCursorPositionChanged (Vector2 position);
+	public const float MaxClickInterval = 0.1f;
 
-	public event OnCursorPositionChanged OnCursorMovedEvent;
-	public event OnCursorPositionChanged OnCursorPressedEvent;
-	public event OnCursorPositionChanged OnCursorReleasedEvent;
+	public delegate void OnPositionChanged (Vector2 position);
+
+	public event OnPositionChanged OnCursorClickedEvent;
+	public event OnPositionChanged OnCursorDraggedEvent;
+	public event OnPositionChanged OnCursorMovedEvent;
 
 	public EasingType TransitionEasingType = EasingType.Cubic;
 	public float TransitionDuration = 0.5f;
@@ -35,66 +37,34 @@ public class CursorController : MonoBehaviour {
 	RectTransform trans;
 	CursorConfig currentConfig;
 
+	bool pressed;
+	float pressStartTime;
+
 
 	void Awake () {
 		trans = GetComponent<RectTransform>();
 	}
 
-	void Start () {
-		SetCursorType(CursorType.CrossCursor);
-	}
-
-	#region Cursor Operations
-
 	public void SetCursorType (CursorType cursorType) {
-		var config = GetCursorConfig(cursorType);
-		if (config == currentConfig) return;
-		else currentConfig = config;
-
-		StopAllCoroutines();
-		StartCoroutine(SetPivotHandler(CursorTransform.pivot, config.Sprite.pivot / config.Sprite.rect.height));
-		CursorSprite.Swap(config.Sprite);
+		var config = FindCursorConfig(cursorType);
+		SetCursorConfig(config);
 	}
 
-	public Vector2 GetCursorPosition () {
-		return CursorTransform.anchoredPosition;
-	}
-
-	public void MoveCursor (Vector2 delta) {
-		var targetPosition = CursorTransform.anchoredPosition + delta;
-
-		targetPosition.x = Clump(trans.rect.xMin, trans.rect.xMax, targetPosition.x);
-		targetPosition.y = Clump(trans.rect.yMin, trans.rect.yMax, targetPosition.y);
-
-		CursorTransform.anchoredPosition = targetPosition;
-
-		if (OnCursorMovedEvent != null) OnCursorMovedEvent(GetCursorPosition());
-	}
-
-	public void NudgeCursor (Vector2 delta) {
-		MoveCursor(delta / 2);
-	}
-
-	public void PressCursor () {
-		CursorColor.Swap(PressedColor);
-
-		if (OnCursorPressedEvent != null) OnCursorPressedEvent(GetCursorPosition());
-	}
-
-	public void ReleaseCursor () {
-		CursorColor.Swap(NormalColor);
-
-		if (OnCursorReleasedEvent != null) OnCursorReleasedEvent(GetCursorPosition());
-	}
-
-	#endregion
-
-	CursorConfig GetCursorConfig (CursorType cursorType) {
+	CursorConfig FindCursorConfig (CursorType cursorType) {
 		foreach (var cursorConfig in CursorConfigs) {
 			if (cursorConfig.CursorType == cursorType) return cursorConfig;
 		}
 
 		throw new System.NotImplementedException();
+	}
+
+	public void SetCursorConfig (CursorConfig cursorConfig) {
+		if (cursorConfig == currentConfig) return;
+		currentConfig = cursorConfig;
+
+		StopAllCoroutines();
+		StartCoroutine(SetPivotHandler(CursorTransform.pivot, cursorConfig.Sprite.pivot / cursorConfig.Sprite.rect.height));
+		CursorSprite.Swap(cursorConfig.Sprite);
 	}
 
 	IEnumerator SetPivotHandler (Vector2 srcPivot, Vector2 dstPivot) {
@@ -110,7 +80,44 @@ public class CursorController : MonoBehaviour {
 		}
 
 		CursorTransform.pivot = dstPivot;
+	}
 
+	public void MoveCursor (Vector2 delta) {
+		var targetPosition = CursorTransform.anchoredPosition + delta;
+
+		targetPosition.x = Clump(trans.rect.xMin, trans.rect.xMax, targetPosition.x);
+		targetPosition.y = Clump(trans.rect.yMin, trans.rect.yMax, targetPosition.y);
+
+		CursorTransform.anchoredPosition = targetPosition;
+
+		if (pressed) {
+			if (OnCursorDraggedEvent != null) OnCursorDraggedEvent(GetCursorPosition());
+		} else {
+			if (OnCursorMovedEvent != null) OnCursorMovedEvent(GetCursorPosition());
+		}
+	}
+
+	public void NudgeCursor (Vector2 delta) {
+		MoveCursor(delta / 2);
+	}
+
+	public void PressCursor () {
+		CursorColor.Swap(PressedColor);
+
+		pressed = true;
+		pressStartTime = Time.time;
+	}
+
+	public void ReleaseCursor () {
+		CursorColor.Swap(NormalColor);
+
+		pressed = false;
+		if (Time.time - pressStartTime < MaxClickInterval)
+		if (OnCursorClickedEvent != null) OnCursorClickedEvent(GetCursorPosition());
+	}
+
+	public Vector2 GetCursorPosition () {
+		return CursorTransform.anchoredPosition;
 	}
 
 	static float Clump (float min, float max, float value) {

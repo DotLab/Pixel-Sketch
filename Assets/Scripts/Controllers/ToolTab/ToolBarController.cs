@@ -2,9 +2,9 @@
 using Uif;
 
 public class ToolBarController : MonoBehaviour {
-	public delegate void OnDrawingToolChanged (ToolType newToolType);
+	public delegate void OnToolChanged (ToolType toolType);
 
-	public event OnDrawingToolChanged OnToolChangedEvent;
+	public event OnToolChanged OnToolChangedEvent;
 
 	public ToolType CurrentToolType {
 		get { return _currentToolType; }

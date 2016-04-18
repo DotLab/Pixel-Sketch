@@ -19,6 +19,7 @@ public class LayerController : RectContent {
 	public event OnStateChanged OnPressedEvent;
 	public event OnStateChanged OnDragedEvent;
 	public event OnStateChanged OnReleasedEvent;
+	public event OnStateChanged OnChangedEvent;
 
 	public ColorSwapable BaseColor;
 	public ColorSwapable HideIconColor;
@@ -88,7 +89,6 @@ public class LayerController : RectContent {
 	}
 
 	public void SetThumbnail (Texture texture) {
-		if (ThumbnailImage.texture != null) DestroyImmediate(ThumbnailImage.texture);
 		ThumbnailImage.texture = texture;
 		ThumbnailFitter.aspectRatio = (float)texture.width / texture.height;
 	}
@@ -96,6 +96,8 @@ public class LayerController : RectContent {
 	public void OnHideToggleClicked () {
 		Hided = !Hided;
 		HideIconColor.Swap(Hided ? SelectedColor : NormalColor);
+
+		if (OnChangedEvent != null) OnChangedEvent(this);
 	}
 
 	public void OnLockToggleClicked () {

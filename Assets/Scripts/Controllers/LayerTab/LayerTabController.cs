@@ -5,12 +5,10 @@ using System.Collections.Generic;
 using Uif;
 
 public class LayerTabController : MonoBehaviour {
-	public delegate void OnLayerReorder ();
-
 	public event LayerController.OnStateChanged OnLayerAddedEvent;
 	public event LayerController.OnStateChanged OnLayerDeletedEvent;
 	public event LayerController.OnStateChanged OnLayerSelectedEvent;
-	public event OnLayerReorder OnLayerReorderEvent;
+	public event LayerController.OnStateChanged OnLayerChangedEvent;
 
 	public const int MaxLayerCount = 7;
 
@@ -63,13 +61,13 @@ public class LayerTabController : MonoBehaviour {
 		layerController.OnPressedEvent += OnLayerPressed;
 		layerController.OnDragedEvent += OnLayerDraged;
 		layerController.OnReleasedEvent += OnLayerReleased;
+		layerController.OnChangedEvent += OnLayerChangedEvent;
 		layerController.Init(LayerTabRect, Vector2.zero);
 
 		layers.Insert(0, layerController);
 		LayerTabFitter.Fit(layers.ToArray());
 
 		if (OnLayerAddedEvent != null) OnLayerAddedEvent(layerController);
-		if (OnLayerReorderEvent != null) OnLayerReorderEvent();
 
 		return layerController;
 	}
@@ -106,6 +104,6 @@ public class LayerTabController : MonoBehaviour {
 
 		LayerTabFitter.Fit(layers.ToArray());
 
-		if (OnLayerReorderEvent != null) OnLayerReorderEvent();
+		if (OnLayerChangedEvent != null) OnLayerChangedEvent(layer);
 	}
 }
