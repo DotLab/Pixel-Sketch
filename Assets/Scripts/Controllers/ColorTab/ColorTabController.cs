@@ -5,18 +5,15 @@ using System.Collections;
 using HsvColorPicker;
 
 public class ColorTabController : MonoBehaviour {
-	public delegate void OnColorChanged (Color newColor);
-
-	public event OnColorChanged OnColorChangedEvent;
-
 	[System.Serializable]
 	public class SubTab {
 		public RectTransform Trans;
 
 		public bool Active = true;
 
-		public Vector2 OriginalPosition;
-		public Vector2 TargetPosition;
+		public Vector2 TargetPosition  { get; set; }
+
+		public Vector2 OriginalPosition  { get; set; }
 
 		public Vector2 CurrentPosition {
 			get { return Trans.anchoredPosition; }
@@ -27,11 +24,11 @@ public class ColorTabController : MonoBehaviour {
 			get { return Trans.sizeDelta; }
 			set { Trans.sizeDelta = value; }
 		}
-
-		public SubTab (RectTransform trans) {
-			Trans = trans;
-		}
 	}
+
+	public delegate void OnColorChanged (Color newColor);
+
+	public event OnColorChanged OnColorChangedEvent;
 
 	public EasingType TransitionEasingType = EasingType.Cubic;
 	public float TransitionDuration = 0.5f;
@@ -47,35 +44,20 @@ public class ColorTabController : MonoBehaviour {
 	[Space]
 	public ColorPicker ColorPicker;
 	public RectTransform ColorTabRect;
-	public RectTransform ColorViewerRect;
-	public RectTransform ColorPickerRect;
-	public RectTransform ColorSwatchRect;
+	public SubTab[] SubTabs = new SubTab[3];
 
-	SubTab[] subTabs;
-
-	float originalHeight;
 	float targetHeight;
+	float originalHeight;
 
 	void Awake () {
-		ColorPicker.OnColorChangedEvent += OnColorPickerChenged;
-
-		subTabs = new SubTab[3];
-		subTabs[0] = new SubTab(ColorViewerRect);
-		subTabs[1] = new SubTab(ColorPickerRect);
-		subTabs[2] = new SubTab(ColorSwatchRect);
+		ColorPicker.OnColorChangedEvent += () => {
+			if (OnColorChangedEvent != null)
+				OnColorChangedEvent(ColorPicker.CurrentColor);
+		};
 	}
 
-	public void OnColorPickerChenged () {
-		if (OnColorChangedEvent != null) OnColorChangedEvent(ColorPicker.CurrentColor);
-	}
-
-	public void OnColorPickerIconClicked () {
-		subTabs[1].Active = !subTabs[1].Active;
-		Fit();
-	}
-
-	public void OnColorSwatchIconClicked () {
-		subTabs[2].Active = !subTabs[2].Active;
+	public void OnControlButtonClicked (int index) {
+		SubTabs[index].Active = !SubTabs[index].Active;
 		Fit();
 	}
 
@@ -83,17 +65,17 @@ public class ColorTabController : MonoBehaviour {
 	public void Fit () {
 		var needFit = false;
 	
-		var height = Padding;
+		var heightPointer = Padding;
 		for (int i = 0; i < 3; i++) {
-			subTabs[i].TargetPosition = new Vector2(subTabs[i].Active ? ActiveX : InactiveX, -height);
-			subTabs[i].OriginalPosition = subTabs[i].CurrentPosition;
-			needFit |= subTabs[i].OriginalPosition != subTabs[i].TargetPosition;
+			SubTabs[i].TargetPosition = new Vector2(SubTabs[i].Active ? ActiveX : InactiveX, -heightPointer);
+			SubTabs[i].OriginalPosition = SubTabs[i].CurrentPosition;
+			needFit |= SubTabs[i].OriginalPosition != SubTabs[i].TargetPosition;
 
-			if (subTabs[i].Active)
-				height += subTabs[i].Size.y + Spacing;
+			if (SubTabs[i].Active)
+				heightPointer += SubTabs[i].Size.y + Spacing;
 		}
 
-		targetHeight = height - Spacing + Padding;
+		targetHeight = heightPointer - Spacing + Padding;
 		originalHeight = ColorTabRect.sizeDelta.y;
 		needFit |= originalHeight != targetHeight;
 
@@ -112,10 +94,10 @@ public class ColorTabController : MonoBehaviour {
 			ColorTabRect.sizeDelta = new Vector2(
 				ColorTabRect.sizeDelta.x,
 				Mathf.Lerp(originalHeight, targetHeight, easedStep));
-			for (int i = 0; i < 3; i++) {
-				subTabs[i].CurrentPosition = Vector2.Lerp(
-					subTabs[i].OriginalPosition,
-					subTabs[i].TargetPosition, easedStep);
+			for (int i = 0; i < SubTabs.Length; i++) {
+				SubTabs[i].CurrentPosition = Vector2.Lerp(
+					SubTabs[i].OriginalPosition,
+					SubTabs[i].TargetPosition, easedStep);
 			}
 
 			time += Time.deltaTime;
@@ -123,8 +105,8 @@ public class ColorTabController : MonoBehaviour {
 		}
 
 		ColorTabRect.sizeDelta = new Vector2(ColorTabRect.sizeDelta.x, targetHeight);
-		for (int i = 0; i < 3; i++) {
-			subTabs[i].CurrentPosition = subTabs[i].TargetPosition;
+		for (int i = 0; i < SubTabs.Length; i++) {
+			SubTabs[i].CurrentPosition = SubTabs[i].TargetPosition;
 		}
 	}
 }

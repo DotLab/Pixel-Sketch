@@ -3,25 +3,43 @@
 using System.Collections.Generic;
 
 public class RectContent : MonoBehaviour {
-	public class PositionComparer : IComparer<RectContent> {
+	public class GridPositionComparer : IComparer<RectContent> {
 		public int Compare (RectContent obj1, RectContent obj2) {
-			var obj1Value =
-				(obj1.Controllable ? obj1.TargetPosition.x : obj1.CurrentPosition.x) / obj1.Size.x
-				- (int)((obj1.Controllable ? obj1.TargetPosition.y : obj1.CurrentPosition.y) / obj1.Size.y) * 1000;
-			var obj2Value =
-				(obj2.Controllable ? obj2.TargetPosition.x : obj2.CurrentPosition.x) / obj2.Size.x
-				- (int)((obj2.Controllable ? obj2.TargetPosition.y : obj2.CurrentPosition.y) / obj2.Size.y) * 1000;
+			return GetWeight(obj1, 100).CompareTo(GetWeight(obj2, 100));
+		}
 
-			return obj1Value.CompareTo(obj2Value);
+		public float GetWeight (RectContent obj, int maxCountY) {
+			var weightX = (obj.Controllable ? obj.TargetPosition.x : obj.CurrentPosition.x) / obj.Size.x;
+			var weightY = (obj.Controllable ? obj.TargetPosition.y : obj.CurrentPosition.y) / obj.Size.y;
+			return weightX - (int)weightY * maxCountY;
 		}
 	}
 
+	public class VerticalPositionComparer : IComparer<RectContent> {
+		public int Compare (RectContent obj1, RectContent obj2) {
+			var obj1Weight = obj1.Controllable ? -obj1.TargetPosition.y : -obj1.CurrentPosition.y;
+			var obj2Weight = obj2.Controllable ? -obj2.TargetPosition.y : -obj2.CurrentPosition.y;
+
+			return obj1Weight.CompareTo(obj2Weight);
+		}
+	}
+
+	public class HorizontalPositionComparer : IComparer<RectContent> {
+		public int Compare (RectContent obj1, RectContent obj2) {
+			var obj1Weight = obj1.Controllable ? obj1.TargetPosition.x : obj1.CurrentPosition.x;
+			var obj2Weight = obj2.Controllable ? obj2.TargetPosition.x : obj2.CurrentPosition.x;
+
+			return obj1Weight.CompareTo(obj2Weight);
+		}
+	}
+
+	public int Index;
 	public bool Active = true;
 	public bool Controllable = true;
 
-	public Vector2 OriginalPosition { get; set; }
-
 	public Vector2 TargetPosition { get; set; }
+
+	public Vector2 OriginalPosition { get; set; }
 
 	public Vector2 CurrentPosition {
 		get { return trans.anchoredPosition; }
@@ -34,7 +52,6 @@ public class RectContent : MonoBehaviour {
 	}
 
 	RectTransform trans;
-
 
 	public virtual void Awake () {
 		trans = GetComponent<RectTransform>();

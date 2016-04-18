@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using System.Collections.Generic;
+
 using HsvColorPicker;
 using Uif;
 
@@ -7,88 +9,79 @@ public class ColorSwatchController : MonoBehaviour {
 	public const int MaxCardCount = 28;
 
 	public ColorPicker ColorPicker;
-	public ColorTabController ColorTabFitter;
-	public ColorSwatchContentFitter ColorSwatchFitter;
+	public ColorTabController ColorTabController;
+	public RectContentFitter ColorSwatchFitter;
+
+	[Space]
+	public Hidable DeleteIconHidable;
+	public RectTransform DeleteIconRect;
 
 	[Space]
 	public GameObject ColorCardPrototype;
 
-	[Space]
-	public Hidable DeleteArea;
-	RectTransform deleteAreaRect;
+	List<ColorCardController> colorCards = new List<ColorCardController>();
 
-	void Awake () {
-		deleteAreaRect = DeleteArea.GetComponent<RectTransform>();
+
+	void OnValidate () {
+		if (DeleteIconRect == null)
+			DeleteIconRect = DeleteIconHidable.GetComponent<RectTransform>();
 	}
 
 	void Start () {
-		ColorSwatchFitter.ColorCards.Clear();
-
 		AddColor(Color.white);
 		AddColor(Color.black);
 
-		ColorSwatchFitter.Fit();
-		ColorTabFitter.Fit();
+		ColorSwatchFitter.Fit(colorCards.ToArray());
+		ColorTabController.Fit();
 	}
 
-	public void AddColor () {
-		if (ColorSwatchFitter.ColorCards.Count >= MaxCardCount) return;
+	public void AddPickerColor () {
+		if (colorCards.Count >= MaxCardCount) return;
 
-		foreach (var content in ColorSwatchFitter.ColorCards) {
+		foreach (var content in colorCards) {
 			if (content.Color == ColorPicker.CurrentColor) return;
 		}
 
 		AddColor(ColorPicker.CurrentColor);
 
-		ColorSwatchFitter.Fit();
-		ColorTabFitter.Fit();
+		ColorSwatchFitter.Fit(colorCards.ToArray());
+		ColorTabController.Fit();
 	}
 
 	void AddColor (Color color) {
-		if (ColorSwatchFitter.ColorCards.Count >= MaxCardCount) return;
+		if (colorCards.Count >= MaxCardCount) return;
 
-		var colorRect = Instantiate(ColorCardPrototype);
-		var colorRectController = colorRect.GetComponent<ColorCardController>();
-		colorRectController.OnColorCardClickedEvent += OnColorCardClicked;
-		colorRectController.OnColorCardPressedEvent += OnColorCardPressed;
-		colorRectController.OnColorCardDragedEvent += OnColorCardDraged;
-		colorRectController.OnColorCardReleasedEvent += OnColorCardReleased;
-		colorRectController.Init(color, transform);
+		var card = Instantiate(ColorCardPrototype);
+		var controller = card.GetComponent<ColorCardController>();
+		controller.OnClickedEvent += OnCardClicked;
+		controller.OnPressedEvent += OnCardPressed;
+		controller.OnDragedEvent += OnCardDraged;
+		controller.OnReleasedEvent += OnCardReleased;
+		controller.Init(color, transform);
 
-		ColorSwatchFitter.ColorCards.Add(colorRectController);
-		ColorSwatchFitter.ColorCards.Sort(new ColorCardController.ColorComparer());
+		colorCards.Add(controller);
+		colorCards.Sort(new ColorCardController.ColorComparer());
 	}
 
-	public void OnColorCardClicked (ColorCardController colorCard) {
-		if (!colorCard.DeleteFlag && colorCard.Controllable)
-			ColorPicker.CurrentColor = colorCard.Color;
+	public void OnCardClicked (ColorCardController colorCard) {
+		ColorPicker.CurrentColor = colorCard.Color;
 	}
 
-	public void OnColorCardPressed (ColorCardController colorCard) {
-		DeleteArea.Show();
+	public void OnCardPressed (ColorCardController colorCard) {
+		DeleteIconHidable.Show();
 	}
 
-	public void OnColorCardDraged (ColorCardController colorCard) {
-		if (IsDeletable(colorCard)) colorCard.SetDeleteFlag();
-		else colorCard.ResetDeleteFlag();
+	public void OnCardDraged (ColorCardController colorCard) {
+		colorCard.DeleteFlag =
+			Vector2.Distance(colorCard.CurrentPosition, DeleteIconRect.anchoredPosition) < 100;
 	}
 
-	public void OnColorCardReleased (ColorCardController colorCard) {
-		if (IsDeletable(colorCard)) colorCard.SetDeleteFlag();
-		else colorCard.ResetDeleteFlag();
+	public void OnCardReleased (ColorCardController colorCard) {
+		DeleteIconHidable.Hide();
 
-		DeleteArea.Hide();
+		if (colorCard.DeleteFlag) colorCards.Remove(colorCard);
 
-		if (colorCard.DeleteFlag) {
-			ColorSwatchFitter.ColorCards.Remove(colorCard);
-			colorCard.Deinit();
-		}
-
-		ColorSwatchFitter.Fit();
-		ColorTabFitter.Fit();
-	}
-
-	bool IsDeletable (RectContent colorCard) {
-		return Vector2.Distance(colorCard.CurrentPosition, deleteAreaRect.anchoredPosition) < 100;
+		ColorSwatchFitter.Fit(colorCards.ToArray());
+		ColorTabController.Fit();
 	}
 }
