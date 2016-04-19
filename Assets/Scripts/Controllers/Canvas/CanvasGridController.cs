@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-public class CanvasController : MonoBehaviour {
-	public RawImage CanvasImage;
-	public RectTransform BackgroundRect;
+public class CanvasGridController : MonoBehaviour {
+	public Color Color1 = Color.magenta;
+	public Color Color2 = Color.magenta;
+
+	public int GridSize = 16;
+	public int SubDivide = 4;
 
 	Material lineMaterial;
 
@@ -22,19 +24,6 @@ public class CanvasController : MonoBehaviour {
 		lineMaterial.SetInt("_ZWrite", 0);
 	}
 
-	public void SetTexture (Texture texture) {
-		CanvasImage.texture = texture;
-
-		var aspect = (float)texture.width / texture.height;
-
-		if (Camera.main.aspect >= aspect) {
-			BackgroundRect.sizeDelta = new Vector2(600 * aspect, 600);
-		} else {
-			var width = 600 * Camera.main.aspect;// * (600.0f / Screen.height);
-			BackgroundRect.sizeDelta = new Vector2(width, width / aspect);
-		}
-	}
-
 	void OnRenderObject () {
 		// Apply the line material
 		lineMaterial.SetPass(0);
@@ -45,11 +34,9 @@ public class CanvasController : MonoBehaviour {
 
 		GL.Color(Color.green);
 
-//		GL.Vertex3(0, -300, 0);
-//		GL.Vertex3(0, 300, 0);
+		// Push
 
 		GL.End();
 		GL.PopMatrix();
 	}
 }
-	

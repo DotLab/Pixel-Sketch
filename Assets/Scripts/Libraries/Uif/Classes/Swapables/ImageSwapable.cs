@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Swapable/ImageSwapable")]
+	[AddComponentMenu("Uif/Swapable/Image Swapable")]
 	[RequireComponent(typeof(Image))]
 	public class ImageSwapable : SpriteSwapable {
 		public Image MainImage;

@@ -2,7 +2,7 @@
 using System.Collections;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Hidable/RectSlideHidable")]
+	[AddComponentMenu("Uif/Hidable/Rect Slide Hidable")]
 	public class RectSlideHidable : Hidable {
 		public bool LockX;
 		public float ShowX;

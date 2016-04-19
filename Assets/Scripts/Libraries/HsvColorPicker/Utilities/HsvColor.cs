@@ -7,7 +7,7 @@
 		public readonly float v;
 
 		public HsvColor (float h, float s, float v) {
-			this.h = ColorHelper.Clump(h, true);
+			this.h = ColorHelper.ClumpHue(h);
 			this.s = ColorHelper.Clump(s);
 			this.v = ColorHelper.Clump(v);
 		}

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace HsvColorPicker {
-	[AddComponentMenu("HsvColorPicker/SvColorSlider")]
+	[AddComponentMenu("HsvColorPicker/Sv Color Slider")]
 	[RequireComponent(typeof(BoxSlider), typeof(RawImage))]
 	public class SvColorSlider : ColorPickerComponent {
 		BoxSlider slider;
@@ -32,19 +32,16 @@ namespace HsvColorPicker {
 		}
 
 		public override void OnColorChanged () {
-			if (Picker.H != h) {
-				h = Picker.H;
-				RegenerateSVTexture();
-			}
+			if (Picker.H != h) RegenerateSVTexture();
 
-			if (Picker.S != slider.normalizedValueX) {
+			if (slider.normalizedValueX != Picker.S) {
+				listen = false;
 				slider.normalizedValueX = Picker.S;
-				listen = false;
 			}
 
-			if (Picker.V != slider.normalizedValueY) {
-				slider.normalizedValueY = Picker.V;
+			if (slider.normalizedValueY != Picker.V) {
 				listen = false;
+				slider.normalizedValueY = Picker.V;
 			}
 		}
 
@@ -53,11 +50,12 @@ namespace HsvColorPicker {
 				Picker.SetColorParam(ColorParamType.S, saturation);
 				Picker.SetColorParam(ColorParamType.V, value);
 			}
+
 			listen = true;
 		}
 
 		void RegenerateSVTexture () {
-			var h = Picker.H;
+			h = Picker.H;
 
 			if (image.texture != null) DestroyImmediate(image.texture);
 

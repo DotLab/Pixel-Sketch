@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace HsvColorPicker {
-	[AddComponentMenu("HsvColorPicker/ColorPicker")]
+	[AddComponentMenu("HsvColorPicker/Color Picker")]
 	public class ColorPicker : MonoBehaviour {
 		public delegate void OnColorChanged ();
 
@@ -97,7 +97,7 @@ namespace HsvColorPicker {
 		public float H {
 			get { return _hue; }
 			set {
-				value = ColorHelper.Clump(value, true);
+				value = ColorHelper.ClumpHue(value);
 				if (_hue == value) return;
 
 				_hue = value;
@@ -131,10 +131,7 @@ namespace HsvColorPicker {
 		}
 
 		void Start () {
-			_currentColor = new Color(_red, _green, _blue, _alpha);
-			_currentHsvColor = new HsvColor(_hue, _saturation, _value);
-
-			if (OnColorChangedEvent != null) OnColorChangedEvent();
+			OnRgbChanged();
 		}
 
 		void OnRgbChanged () {

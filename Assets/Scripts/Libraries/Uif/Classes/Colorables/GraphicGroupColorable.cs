@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Colorable/GraphicGroupColorable")]
+	[AddComponentMenu("Uif/Colorable/Graphic Group Colorable")]
 	public class GraphicGroupColorable : Colorable {
 		public bool ExcludeSelf = true;
 		public LayerMask ColorableLayers;

@@ -27,6 +27,7 @@ public class LayerController : RectContent {
 
 	[Space]
 	public RawImage ThumbnailImage;
+	public ColorSwapable ThumbnailColor;
 	public AspectRatioFitter ThumbnailFitter;
 
 	[Space]
@@ -57,10 +58,12 @@ public class LayerController : RectContent {
 				BaseColor.Swap(Color.red);
 				HideIconColor.Swap(Color.red);
 				LockIconColor.Swap(Color.red);
+				ThumbnailColor.Swap(Color.red);
 			} else {
 				BaseColor.Swap(Color.white);
 				HideIconColor.Swap(Hided ? SelectedColor : NormalColor);
 				LockIconColor.Swap(Locked ? SelectedColor : NormalColor);
+				ThumbnailColor.Swap(Color.white);
 			}
 		}
 	}
@@ -72,8 +75,10 @@ public class LayerController : RectContent {
 
 	void OnValidate () {
 		if (BaseColor == null) BaseColor = GetComponent<ColorSwapable>();
-		if (ThumbnailImage != null)
+		if (ThumbnailImage != null) {
+			ThumbnailColor = ThumbnailImage.GetComponent<ColorSwapable>();
 			ThumbnailFitter = ThumbnailImage.GetComponent<AspectRatioFitter>();
+		}
 	}
 
 	public override void Init (Transform parent, Vector2 position) {
@@ -82,10 +87,12 @@ public class LayerController : RectContent {
 		BaseColor.SilentSwap(Color.clear);
 		HideIconColor.SilentSwap(Color.clear);
 		LockIconColor.SilentSwap(Color.clear);
+		ThumbnailColor.SilentSwap(Color.clear);
 
 		BaseColor.Swap(Color.white);
 		HideIconColor.Swap(Color.white);
 		LockIconColor.Swap(Color.white);
+		ThumbnailColor.Swap(Color.white);
 	}
 
 	public void SetThumbnail (Texture texture) {

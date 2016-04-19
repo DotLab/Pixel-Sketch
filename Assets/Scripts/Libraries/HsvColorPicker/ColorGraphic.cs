@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace HsvColorPicker {
-	[AddComponentMenu("HsvColorPicker/ColorGraphic")]
+	[AddComponentMenu("HsvColorPicker/Color Graphic")]
 	[RequireComponent(typeof(Graphic))]
 	public class ColorGraphic : ColorPickerComponent {
 		public bool Inverted;
@@ -15,7 +15,7 @@ namespace HsvColorPicker {
 		}
 
 		public override void OnColorChanged () {
-			graphic.color = Inverted ? ColorHelper.Invert(Picker.CurrentColor) : Picker.CurrentColor;
+			graphic.color = Inverted ? ColorHelper.InvertColor(Picker.CurrentColor) : Picker.CurrentColor;
 		}
 	}
 }

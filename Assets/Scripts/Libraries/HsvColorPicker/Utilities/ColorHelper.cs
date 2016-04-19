@@ -7,17 +7,20 @@ namespace HsvColorPicker {
 	public static class ColorHelper {
 		const string ColorHexRegex = "^#?(?:[0-9a-fA-F]{3,4}){1,2}$";
 
-		public static float Clump (float value, bool sliding = false) {
-			if (sliding) return value < 0 ? value + 1 : (value >= 1 ? value - 1 : value);//value < 0 ? value - (int)(value - 1) : value - (int)value;
-		else return value < 0 ? 0 : (value > 1 ? 1 : value);
+		public static float Clump (float value) {
+			return value < 0 ? 0 : (value > 1 ? 1 : value);
 		}
 
-		public static Color Invert (Color color) {
+		public static float ClumpHue (float value) {
+			return value < 0 || value >= 1 ? 0 : value;
+		}
+
+		public static Color InvertColor (Color color) {
 			return new Color(1 - color.r, 1 - color.g, 1 - color.b);
 		}
 
-		public static HsvColor Invert (HsvColor color) {
-			return new HsvColor(Clump(360 - color.h, true), color.s, color.v);
+		public static HsvColor InvertColor (HsvColor color) {
+			return new HsvColor(ClumpHue(1 - color.h), color.s, color.v);
 		}
 
 		public static HsvColor Rgb2Hsv (Color color) {
@@ -40,14 +43,15 @@ namespace HsvColorPicker {
 				h = (g - r) / delta + 2;
 			else if (cmax == g)
 				h = (r - b) / delta + 4;
-			h = h * 60f / 360f;
+			h /= 6;
+
 			if (h <= 0) h += 1f;
 			h = 1f - h;
 
 			if (cmax == 0) s = 0;
 			else s = delta / cmax;
 
-			return new HsvColor(Clump(h, true), Clump(s), Clump(cmax));
+			return new HsvColor(h, s, cmax);
 		}
 
 		public static Color Hsv2Rgb (HsvColor color, float a = 1) {

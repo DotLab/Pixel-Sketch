@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: afa8ce672d80a3144bb653d135ae6e14
-timeCreated: 1460360611
+timeCreated: 1461056108
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -175,22 +175,30 @@ TextureImporter:
     - name: ui-icon-editor_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
+        x: 75
+        y: 68
+        width: 10
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 10, z: 5, w: 10}
       outline:
-      - - {x: -4, y: 16}
-        - {x: -16, y: 12}
-        - {x: -16, y: -13}
-        - {x: -9, y: -16}
-        - {x: 3, y: -16}
-        - {x: 16, y: -11}
-        - {x: 16, y: 11}
-        - {x: 8, y: 16}
+      - - {x: -1, y: -2}
+        - {x: -7, y: -8}
+        - {x: -7, y: -12}
+        - {x: -5, y: -14}
+        - {x: 5, y: -14}
+        - {x: 7, y: -12}
+        - {x: 7, y: -8}
+        - {x: 1, y: -2}
+      - - {x: -6, y: 14}
+        - {x: -7, y: 12}
+        - {x: -7, y: 6}
+        - {x: -1, y: 2}
+        - {x: 1, y: 2}
+        - {x: 7, y: 8}
+        - {x: 7, y: 12}
+        - {x: 5, y: 14}
     - name: ui-icon-editor_7
       rect:
         serializedVersion: 2
@@ -237,12 +245,12 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -14, y: 16}
-        - {x: -14, y: -16}
+      - - {x: -15, y: 16}
+        - {x: -15, y: -7}
+        - {x: -12, y: -16}
         - {x: 12, y: -16}
-        - {x: 14, y: 2}
-        - {x: 14, y: 15}
-        - {x: 11, y: 16}
+        - {x: 15, y: -2}
+        - {x: 15, y: 16}
     - name: ui-icon-editor_10
       rect:
         serializedVersion: 2

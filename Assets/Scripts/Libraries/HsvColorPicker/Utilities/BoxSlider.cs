@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace UnityEngine.UI {
-	[AddComponentMenu("UI/BoxSlider")]
+	[AddComponentMenu("UI/Box Slider")]
 	[RequireComponent(typeof(RectTransform))]
 	public class BoxSlider : Selectable, IDragHandler, IInitializePotentialDragHandler, ICanvasElement {
 		public enum Direction {

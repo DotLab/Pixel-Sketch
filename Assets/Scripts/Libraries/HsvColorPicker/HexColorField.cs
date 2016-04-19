@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace HsvColorPicker {
-	[AddComponentMenu("HsvColorPicker/HexColorField")]
+	[AddComponentMenu("HsvColorPicker/Hex Color Field")]
 	[RequireComponent(typeof(InputField))]
 	public class HexColorField : ColorPickerComponent {
 		public bool DisplayAlpha = true;

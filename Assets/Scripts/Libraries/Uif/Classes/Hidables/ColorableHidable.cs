@@ -2,7 +2,7 @@
 using System.Collections;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Hidable/ColorableHidable")]
+	[AddComponentMenu("Uif/Hidable/Colorable Hidable")]
 	[RequireComponent(typeof(Colorable))]
 	public class ColorableHidable : Hidable {
 		public Colorable Colorable;

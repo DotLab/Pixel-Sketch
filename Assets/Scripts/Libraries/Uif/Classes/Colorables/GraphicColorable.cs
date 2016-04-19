@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Colorable/GraphicColorable")]
+	[AddComponentMenu("Uif/Colorable/Graphic Colorable")]
 	[RequireComponent(typeof(Graphic))]
 	public class GraphicColorable : Colorable {
 		Graphic graphic;

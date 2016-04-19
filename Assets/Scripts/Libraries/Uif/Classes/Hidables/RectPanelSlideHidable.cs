@@ -2,7 +2,7 @@
 using System.Collections;
 
 namespace Uif {
-	[AddComponentMenu("Uif/Hidable/RectPanelSlideHidable")]
+	[AddComponentMenu("Uif/Hidable/Rect Panel Slide Hidable")]
 	public class RectPanelSlideHidable : Hidable {
 		[Header("Lower Left : Upper Right")]
 		public Vector2 ShowMin;

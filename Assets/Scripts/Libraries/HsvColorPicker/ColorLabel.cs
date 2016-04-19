@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace HsvColorPicker {
-	[AddComponentMenu("HsvColorPicker/ColorLabel")]
+	[AddComponentMenu("HsvColorPicker/Color Label")]
 	[RequireComponent(typeof(Text))]
 	public class ColorLabel : ColorPickerComponent {
 		public ColorParamType Type;

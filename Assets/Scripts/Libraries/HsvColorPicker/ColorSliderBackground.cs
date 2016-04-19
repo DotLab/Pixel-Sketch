@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace HsvColorPicker {
-	[AddComponentMenu("HsvColorPicker/ColorSliderBackground")]
+	[AddComponentMenu("HsvColorPicker/Color Slider Background")]
 	[RequireComponent(typeof(RawImage))]
 	public class ColorSliderBackground : ColorPickerComponent {
 		public ColorParamType Type;
