@@ -145,6 +145,7 @@ public class LayerController : RectContent {
 		BaseColor.Swap(Color.clear);
 		HideIconColor.Swap(Color.clear);
 		LockIconColor.Swap(Color.clear);
+		ThumbnailColor.Swap(Color.clear);
 
 		Destroy(gameObject, 0.5f);
 	}

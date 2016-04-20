@@ -5,38 +5,64 @@ public class CanvasGridController : MonoBehaviour {
 	public Color Color2 = Color.magenta;
 
 	public int GridSize = 16;
-	public int SubDivide = 4;
+	public int Subdivision = 4;
 
-	Material lineMaterial;
+	RectTransform trans;
+	Material material;
 
 	void Awake () {
-		// Unity has a built-in shader that is useful for drawing
-		// simple colored things.
+		trans = GetComponent<RectTransform>();
+
 		var shader = Shader.Find("Hidden/Internal-Colored");
-		lineMaterial = new Material(shader);
-		lineMaterial.hideFlags = HideFlags.HideAndDontSave;
-		// Turn on alpha blending
-		lineMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-		lineMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-		// Turn backface culling off
-		lineMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
-		// Turn off depth writes
-		lineMaterial.SetInt("_ZWrite", 0);
+		material = new Material(shader);
+		material.hideFlags = HideFlags.HideAndDontSave;
 	}
 
 	void OnRenderObject () {
+		var drawingSize = DrawingSceneScheduler.Instance.DrawingSize;
+		if (GridSize < 1 || GridSize > Mathf.Max(drawingSize.x, drawingSize.y))
+			return;
+
 		// Apply the line material
-		lineMaterial.SetPass(0);
+		material.SetPass(0);
 
 		GL.PushMatrix();
 		GL.MultMatrix(transform.localToWorldMatrix);
+
 		GL.Begin(GL.LINES);
 
-		GL.Color(Color.green);
+		GL.Color(Color1);
+		var worldGridSize = (float)GridSize * (trans.rect.width / drawingSize.x);
+		for (float x = trans.rect.xMin; x <= trans.rect.xMax; x += worldGridSize) {
+			GL.Vertex(new Vector3(x, trans.rect.yMin));
+			GL.Vertex(new Vector3(x, trans.rect.yMax));
+		}
 
-		// Push
+		for (float y = trans.rect.yMin; y <= trans.rect.yMax; y += worldGridSize) {
+			GL.Vertex(new Vector3(trans.rect.xMin, y));
+			GL.Vertex(new Vector3(trans.rect.xMax, y));
+		}
+
+		if (0 < Subdivision && Subdivision <= GridSize) {
+			GL.Color(Color2);
+			var worldSubGridSize = worldGridSize / Subdivision;
+			for (float x = trans.rect.xMin; x < trans.rect.xMax; x += worldSubGridSize) {
+				if (x % worldGridSize == 0) continue;
+
+				GL.Vertex(new Vector3(x, trans.rect.yMin));
+				GL.Vertex(new Vector3(x, trans.rect.yMax));
+			}
+
+			for (float y = trans.rect.yMin; y < trans.rect.yMax; y += worldSubGridSize) {
+				if (y % worldGridSize == 0) continue;
+
+				GL.Vertex(new Vector3(trans.rect.xMin, y));
+				GL.Vertex(new Vector3(trans.rect.xMax, y));
+			}
+		}
 
 		GL.End();
+
 		GL.PopMatrix();
 	}
 }

@@ -43,6 +43,7 @@ public class ToolBarController : MonoBehaviour {
 
 	[Space]
 	public Hidable ShowIcon;
+	public Hidable ConfigPopup;
 	public Hidable[] HidableTabs;
 
 
@@ -172,5 +173,9 @@ public class ToolBarController : MonoBehaviour {
 			bar.Show();
 		}
 		ShowIcon.Hide();
+	}
+
+	public void OnConfigButtonClicked () {
+		PopupManager.Instance.ShowPopup(ConfigPopup);
 	}
 }

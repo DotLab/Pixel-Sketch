@@ -3,6 +3,7 @@
 using System.Collections;
 
 using HsvColorPicker;
+using Uif;
 
 public class ColorTabController : MonoBehaviour {
 	[System.Serializable]
@@ -43,6 +44,7 @@ public class ColorTabController : MonoBehaviour {
 
 	[Space]
 	public ColorPicker ColorPicker;
+	public Hidable ColorPickerPopup;
 	public RectTransform ColorTabRect;
 	public SubTab[] SubTabs = new SubTab[3];
 
@@ -59,6 +61,10 @@ public class ColorTabController : MonoBehaviour {
 	public void OnControlButtonClicked (int index) {
 		SubTabs[index].Active = !SubTabs[index].Active;
 		Fit();
+	}
+
+	public void OnColorFieldButtonClicked () {
+		PopupManager.Instance.ShowPopup(ColorPickerPopup);
 	}
 
 	[ContextMenu("Fit")]

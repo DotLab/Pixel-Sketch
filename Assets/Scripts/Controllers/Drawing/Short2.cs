@@ -1,5 +1,6 @@
 ﻿using System;
 
+[Serializable]
 public struct Short2 {
 	public Int16 x;
 	public Int16 y;

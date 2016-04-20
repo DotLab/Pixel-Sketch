@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
 public class DrawingSceneScheduler : MonoBehaviour {
-	public static DrawingSceneScheduler Instance { get { return instance; } }
+	public static DrawingSceneScheduler Instance {
+		get { return instance; }
+	}
 
 	static DrawingSceneScheduler instance;
 
@@ -13,13 +15,14 @@ public class DrawingSceneScheduler : MonoBehaviour {
 	public LayerTabController LayerTab;
 
 	public Color MainColor;
+	public Short2 DrawingSize;
 	public ToolType CurrentTool;
 
-	public Drawing Drawing;
+	Drawing drawing;
 
 	void Awake () {
 		instance = this;
-		Drawing = new Drawing(Canvas, new Short2(32, 32));
+		drawing = new Drawing(Canvas, DrawingSize);
 
 		Cursor.OnCursorClickedEvent += position => DebugConsole.Log("OnCursorClickedEvent " + position);
 		Cursor.OnCursorDraggedEvent += position => DebugConsole.Log("OnCursorDraggedEvent " + position);
@@ -29,15 +32,19 @@ public class DrawingSceneScheduler : MonoBehaviour {
 		
 		ColorTab.OnColorChangedEvent += color => MainColor = color;
 		
-		LayerTab.OnLayerAddedEvent += Drawing.AddLayer;
-		LayerTab.OnLayerDeletedEvent += Drawing.DeleteLayer;
-		LayerTab.OnLayerSelectedEvent += Drawing.SelectLayer;
-		LayerTab.OnLayerChangedEvent += layer => Drawing.RenderDrawing();
+		LayerTab.OnLayerAddedEvent += drawing.AddLayer;
+		LayerTab.OnLayerDeletedEvent += drawing.DeleteLayer;
+		LayerTab.OnLayerSelectedEvent += drawing.SelectLayer;
+		LayerTab.OnLayerChangedEvent += layer => drawing.RenderDrawing();
 	}
 
 	void Start () {
-		Drawing.DrawPoly(new [] { new Short2(2, 3), new Short2(12, 31), new Short2(19, 6) }, Color.red);
-		Drawing.ApplyDraw();
+		drawing.DrawPoly(new [] { new Short2(2, 3), new Short2(12, 31), new Short2(19, 6) }, Color.red);
+		drawing.ApplyDraw();
+	}
+
+	public void ResizeDrawing (Short2 size) {
+		drawing.ResizeDrawing(size);
 	}
 
 	void OnToolChanged (ToolType toolType) {

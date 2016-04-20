@@ -12,9 +12,6 @@ public class PopupOverlayController : MonoBehaviour, IPointerClickHandler {
 
 	public Hidable OverlayHidable;
 
-	[Space]
-	public bool HideOnClick;
-
 
 	void OnValidate () {
 		OverlayHidable = GetComponent<Hidable>();
@@ -30,16 +27,12 @@ public class PopupOverlayController : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void HideOverlay () {
-		if (OnOverlayClickcedEvent != null) OnOverlayClickcedEvent();
-
 		OverlayHidable.Hide();
 		StartCoroutine(DeactivateHandler());
 	}
 
 	public void OnPointerClick (PointerEventData eventData) {
 		if (OnOverlayClickcedEvent != null) OnOverlayClickcedEvent();
-
-		if (HideOnClick) HideOverlay();
 	}
 
 	IEnumerator DeactivateHandler () {
