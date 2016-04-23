@@ -12,5 +12,12 @@
 	EraserActionCursor = 0x23,
 	BrushActionCursor = 0x24,
 
+	MagicCursor = 0x30,
+	MagicNewCursor = 0x31,
+	MagicAddCursor = 0x32,
+	MagicSubCursor = 0x33,
+
+	Transparent = 0x40,
+
 	CursorFamilyMask = 0xF0,
 }

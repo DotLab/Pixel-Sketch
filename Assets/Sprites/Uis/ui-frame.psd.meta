@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: e3e8caad3eaec234f9c826bea35d2241
-timeCreated: 1459476629
+timeCreated: 1461308003
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: ui-frame-glass
     21300002: ui-frame-plastic
     21300004: ui-frame-field
+    21300006: ui-frame_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +31,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-  maxTextureSize: 128
+  maxTextureSize: 256
   textureSettings:
     filterMode: 1
     aniso: 16
@@ -47,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 24, y: 24, z: 24, w: 24}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -57,52 +58,66 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 66
-        width: 60
-        height: 60
+        y: 130
+        width: 124
+        height: 124
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 22, y: 22, z: 22, w: 22}
+      border: {x: 46, y: 46, z: 46, w: 46}
       outline:
-      - - {x: -30, y: 30}
-        - {x: -30, y: -27}
-        - {x: -28, y: -30}
-        - {x: 29, y: -30}
-        - {x: 30, y: -28}
-        - {x: 30, y: 30}
+      - - {x: -31, y: 43}
+        - {x: -43, y: 41}
+        - {x: -51, y: 34}
+        - {x: -51, y: -50}
+        - {x: -49, y: -61}
+        - {x: 37, y: -61}
+        - {x: 51, y: -45}
+        - {x: 51, y: 22}
+        - {x: 33, y: 43}
     - name: ui-frame-plastic
       rect:
         serializedVersion: 2
-        x: 71
-        y: 71
-        width: 50
-        height: 50
+        x: 140
+        y: 140
+        width: 104
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 17, y: 17, z: 17, w: 17}
+      border: {x: 36, y: 36, z: 36, w: 36}
       outline:
-      - - {x: -19, y: 25}
-        - {x: -25, y: 21}
-        - {x: -25, y: -25}
-        - {x: 25, y: -25}
-        - {x: 25, y: 22}
-        - {x: 18, y: 25}
+      - - {x: -43, y: 43}
+        - {x: -43, y: -35}
+        - {x: -42, y: -43}
+        - {x: -38, y: -52}
+        - {x: 43, y: -52}
+        - {x: 43, y: 43}
     - name: ui-frame-field
       rect:
         serializedVersion: 2
-        x: 12
-        y: 12
-        width: 40
-        height: 40
+        x: 22
+        y: 22
+        width: 84
+        height: 84
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 12, y: 12, z: 12, w: 12}
+      border: {x: 26, y: 26, z: 26, w: 26}
       outline:
-      - - {x: -20, y: 20}
-        - {x: -20, y: -19}
-        - {x: -19, y: -20}
-        - {x: 20, y: -20}
-        - {x: 20, y: 20}
+      - - {x: -38, y: 38}
+        - {x: -38, y: -42}
+        - {x: 38, y: -42}
+        - {x: 38, y: 34}
+        - {x: 34, y: 38}
+    - name: ui-frame_0
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 0
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 

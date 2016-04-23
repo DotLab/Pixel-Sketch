@@ -8,7 +8,9 @@ public class Drawing {
 	Short2 size;
 	Texture2D texture;
 
+	bool dirtyFlag;
 	Layer selectedLayer;
+	readonly Selection selection = new Selection();
 	readonly List<Layer> layers = new List<Layer>();
 
 	public Drawing (CanvasController uiController, Short2 c) {
@@ -18,22 +20,84 @@ public class Drawing {
 		RenderDrawing();
 	}
 
-	#region DrawShape
+	#region Selection
 
-	public void SetColor (float x, float y, Color color) {
+	public void ClearSelection () {
+		selection.ClearSelection();
+	}
+
+	public void NewSelection (Short2 point) {
+		ClearSelection();
+		AddSelection(point);
+	}
+
+	public void AddSelection (Short2 point) {
 		if (selectedLayer == null) return;
 
-		selectedLayer.SetColor(new Short2(x, y), color);
+		selectedLayer.AddToSelection(point, selection);
+	}
+
+	public void SubSelection (Short2 point) {
+		if (selectedLayer == null) return;
+
+		selectedLayer.SubFromSelection(point, selection);
+	}
+
+	public void ApplySelection () {
+		if (selectedLayer == null) return;
+
+		selectedLayer.ApplySelection(selection);
+	}
+
+	public void ApplyTransform () {
+		if (selectedLayer == null) return;
+
+		selectedLayer.ApplyTransform(selection);
+		ClearSelection();
+	}
+
+	#endregion
+
+	#region Draw
+
+	public void SetColor (float x, float y, Color color) {
+		SetColor(new Short2(x, y), color);
 	}
 
 	public void SetColor (Short2 point, Color color) {
 		if (selectedLayer == null) return;
 
-		selectedLayer.SetColor(point, color);
+		dirtyFlag |= selectedLayer.SetColor(point, color);
 	}
 
-	public void DrawPoint (Short2 point, Color color) {
-		SetColor(point, color);
+	public void ClearColor (float x, float y) {
+		ClearColor(new Short2(x, y));
+	}
+
+	public void ClearColor (Short2 point) {
+		if (selectedLayer == null) return;
+
+		dirtyFlag |= selectedLayer.ClearColor(point);
+	}
+
+	public void ClearLine (Short2 point1, Short2 point2) {
+		int dx = point2.x - point1.x, dy = point2.y - point1.y;
+		int s = Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy));
+		float xi = (float)dx / (float)s, yi = (float)dy / (float)s;
+		float x = point1.x, y = point1.y;
+
+		for (int i = 0; i <= s; i++) {
+			ClearColor(x + 0.5f, y + 0.5f);
+
+			x += xi;
+			y += yi;
+		}
+	}
+
+	public void FillColor (Short2 point, Color color) {
+		if (selectedLayer == null) return;
+
+		dirtyFlag |= selectedLayer.FillColor(point, color);
 	}
 
 	public void DrawLine (Short2 point1, Short2 point2, Color color) {
@@ -96,13 +160,16 @@ public class Drawing {
 	}
 
 	public void ApplyDraw () {
+		if (!dirtyFlag) return;
+		dirtyFlag = false;
+
 		RenderDrawing();
 		selectedLayer.RenderLayer();
 	}
 
 	#endregion
 
-	#region LayerControl
+	#region Layer
 
 	public void AddLayer (LayerController layerUi) {
 		layers.Add(new Layer(layerUi, size));
@@ -127,7 +194,7 @@ public class Drawing {
 
 	#endregion
 
-	#region Rendering
+	#region Render
 
 	public void ResizeDrawing (Short2 c) {
 		if (c == size) return;
@@ -147,6 +214,8 @@ public class Drawing {
 			texture.hideFlags = HideFlags.DontSave;
 			UiController.SetTexture(texture);
 		}
+
+		layers.Sort(new Layer.UiComparer());
 
 		var pixels = new Color[size.x * size.y];
 /*

@@ -11,14 +11,17 @@ public class CursorController : MonoBehaviour {
 		public Sprite Sprite;
 	}
 
-	public const float MaxClickInterval = 0.1f;
+	public const float MaxClickInterval = 0.2f;
 
 	public delegate void OnPositionChanged (Vector2 position);
 
-	public event OnPositionChanged OnCursorClickedEvent;
-	public event OnPositionChanged OnCursorDraggedEvent;
 	public event OnPositionChanged OnCursorMovedEvent;
+	public event OnPositionChanged OnCursorDraggedEvent;
+	public event OnPositionChanged OnCursorClickedEvent;
 
+	public bool Active;
+
+	[Space]
 	public EasingType TransitionEasingType = EasingType.Cubic;
 	public float TransitionDuration = 0.5f;
 
@@ -32,20 +35,34 @@ public class CursorController : MonoBehaviour {
 	public Color PressedColor = Color.cyan;
 
 	[Space]
+	public Sprite TransparentSprite;
 	public CursorConfig[] CursorConfigs;
 
 	RectTransform trans;
 	CursorConfig currentConfig;
 
 	bool pressed;
+	public bool Dragged;
 	float pressStartTime;
+	public Vector2 LastPosition;
 
 
 	void Awake () {
 		trans = GetComponent<RectTransform>();
 	}
 
+	#region DrawingSceneScheduler
+
+	public void HideCursor () {
+		Active = false;
+
+		currentConfig = null;
+		CursorSprite.Swap(TransparentSprite);
+	}
+
 	public void SetCursorType (CursorType cursorType) {
+		Active = true;
+
 		var config = FindCursorConfig(cursorType);
 		SetCursorConfig(config);
 	}
@@ -58,7 +75,7 @@ public class CursorController : MonoBehaviour {
 		throw new System.NotImplementedException();
 	}
 
-	public void SetCursorConfig (CursorConfig cursorConfig) {
+	void SetCursorConfig (CursorConfig cursorConfig) {
 		if (cursorConfig == currentConfig) return;
 		currentConfig = cursorConfig;
 
@@ -82,7 +99,13 @@ public class CursorController : MonoBehaviour {
 		CursorTransform.pivot = dstPivot;
 	}
 
+	#endregion
+
+	#region CursorTouchHandler
+
 	public void MoveCursor (Vector2 delta) {
+		if (!Active) return;
+
 		var targetPosition = CursorTransform.anchoredPosition + delta;
 
 		targetPosition.x = Clump(trans.rect.xMin, trans.rect.xMax, targetPosition.x);
@@ -92,27 +115,37 @@ public class CursorController : MonoBehaviour {
 
 		if (pressed) {
 			if (OnCursorDraggedEvent != null) OnCursorDraggedEvent(GetCursorPosition());
+			Dragged = true;
 		} else {
 			if (OnCursorMovedEvent != null) OnCursorMovedEvent(GetCursorPosition());
 		}
+
+		LastPosition = GetCursorPosition();
 	}
 
 	public void NudgeCursor (Vector2 delta) {
-		MoveCursor(delta / 2);
+		MoveCursor(delta * 0.4f);
 	}
 
 	public void PressCursor () {
+		if (!Active) return;
+
 		CursorColor.Swap(PressedColor);
 
 		pressed = true;
+		Dragged = false;
 		pressStartTime = Time.time;
+
+		LastPosition = GetCursorPosition();
 	}
 
 	public void ReleaseCursor () {
+		if (!Active) return;
+
 		CursorColor.Swap(NormalColor);
 
 		pressed = false;
-		if (Time.time - pressStartTime < MaxClickInterval)
+		if (!Dragged && Time.time - pressStartTime < MaxClickInterval)
 		if (OnCursorClickedEvent != null) OnCursorClickedEvent(GetCursorPosition());
 	}
 
@@ -123,4 +156,6 @@ public class CursorController : MonoBehaviour {
 	static float Clump (float min, float max, float value) {
 		return value < min ? min : value > max ? max : value;
 	}
+
+	#endregion
 }

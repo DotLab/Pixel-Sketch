@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler {
+public class CursorTouchHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler {
 	public CursorController Cursor;
 
+	[Space]
 	public int MainTouchId;
 	public bool MainTouchPressed;
 
@@ -24,7 +25,7 @@ public class TouchHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 	public void OnDrag (PointerEventData eventData) {
 		var delta = (eventData).delta * (600.0f / Screen.height);
 		if (MainTouchPressed && eventData.pointerId == MainTouchId) {
-			Cursor.MoveCursor(delta);
+			Cursor.MoveCursor(delta * 2);
 		}
 
 		if (AsistTouchPressed && eventData.pointerId == AsistTouchId) {

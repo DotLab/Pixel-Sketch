@@ -3,33 +3,25 @@
 using System.Collections.Generic;
 
 public class Selection {
-	public enum SelectMode {
-		New,
-		Add,
-		Remove
+	public readonly Dictionary<Short2, bool> Area = new Dictionary<Short2, bool>();
+	public readonly Dictionary<Short2, Color> Content = new Dictionary<Short2, Color>();
+
+	public float Scale;
+	public float Rotation;
+	public Vector2 Pivotal;
+	public Vector2 Position;
+
+
+	public void ClearSelection () {
+		Area.Clear();
 	}
 
-	public readonly Dictionary<Short2, bool> Content = new Dictionary<Short2, bool>();
-
-	public void SelectPoint (Short2 point, SelectMode mode) {
-		if (mode == SelectMode.New) Content.Clear();
-
-		switch (mode) {
-		case SelectMode.New:
-		case SelectMode.Add:
-			Content[point] = true;
-			break;
-		case SelectMode.Remove:
-			if (Content.ContainsKey(point)) Content.Remove(point);
-			break;
-		}
+	public bool GetSelection (Short2 c) {
+		return Area.ContainsKey(c);
 	}
 
-	public void SelectLine () {
-
-	}
-
-	public void SelectRect (Short2 point1, Short2 point2, SelectMode mode) {
-		
+	public void SetSelection (Short2 c, bool value) {
+		if (value) Area[c] = true;
+		else if (Area.ContainsKey(c)) Area.Remove(c);
 	}
 }

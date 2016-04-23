@@ -18,5 +18,14 @@
 	PolyShapeTool = 0x43,
 	LineShapeTool = 0x44,
 
+	MagicTool = 0x50,
+	MagicNewTool = 0x51,
+	MagicAddTool = 0x52,
+	MagicSubTool = 0x53,
+
+	TransTool = 0x60,
+
 	ToolFamilyMask = 0xF0,
+
+	None = 0xFF
 }

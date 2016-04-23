@@ -1,0 +1,433 @@
+fileFormatVersion: 2
+guid: 88fe6e3f9124fef4dbfe44ae996cb8b8
+timeCreated: 1461297189
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ui-icon-drawing_4
+    21300002: ui-icon-drawing_5
+    21300004: ui-icon-drawing_6
+    21300006: ui-icon-drawing-select
+    21300008: ui-icon-drawing_9
+    21300010: ui-icon-drawing_10
+    21300012: ui-icon-drawing-shape
+    21300014: ui-icon-drawing_13
+    21300016: ui-icon-drawing_14
+    21300018: ui-icon-drawing_15
+    21300020: ui-icon-drawing_0
+    21300022: ui-icon-drawing_1
+    21300024: ui-icon-drawing_8
+    21300026: ui-icon-drawing_12
+    21300028: ui-icon-tool-move
+    21300030: ui-icon-tool-dropper
+    21300032: ui-icon-tool-pencil
+    21300034: ui-icon-tool-eraser
+    21300036: ui-icon-tool-brush
+    21300038: ui-icon-tool-select-rect
+    21300040: ui-icon-tool-select-ellip
+    21300042: ui-icon-tool-select-poly
+    21300044: ui-icon-tool-shape-rect
+    21300046: ui-icon-tool-shape-ellip
+    21300048: ui-icon-tool-shape-poly
+    21300050: ui-icon-tool-shape-line
+    21300052: ui-icon-toolbar_0
+    21300054: ui-icon-toolbar_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 256
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: ui-icon-tool-move
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 10, y: 6}
+        - {x: -6, y: -6}
+        - {x: -6, y: -14}
+        - {x: 10, y: -30}
+        - {x: 14, y: -30}
+        - {x: 30, y: -14}
+        - {x: 30, y: -10}
+        - {x: 18, y: 6}
+      - - {x: -25, y: 30}
+        - {x: -28, y: 30}
+        - {x: -30, y: 29}
+        - {x: -30, y: -12}
+        - {x: -28, y: -14}
+        - {x: -27, y: -14}
+        - {x: 1, y: -3}
+        - {x: 2, y: 0}
+        - {x: 2, y: 3}
+    - name: ui-icon-tool-dropper
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 30}
+        - {x: 1, y: 29}
+        - {x: -11, y: 14}
+        - {x: -30, y: -15}
+        - {x: -30, y: -30}
+        - {x: -8, y: -30}
+        - {x: 23, y: -14}
+        - {x: 30, y: 2}
+        - {x: 30, y: 21}
+        - {x: 24, y: 30}
+    - name: ui-icon-tool-pencil
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11, y: 30}
+        - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: -10, y: -30}
+        - {x: 30, y: 4}
+        - {x: 30, y: 23}
+        - {x: 27, y: 30}
+    - name: ui-icon-tool-eraser
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22, y: 28}
+        - {x: -6, y: 28}
+        - {x: -24, y: -6}
+        - {x: -24, y: -26}
+        - {x: -23, y: -28}
+        - {x: 6, y: -28}
+        - {x: 24, y: 4}
+        - {x: 24, y: 26}
+    - name: ui-icon-tool-brush
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1, y: -26}
+        - {x: 2, y: -27}
+        - {x: 23, y: -6}
+        - {x: 22, y: -3}
+        - {x: 28, y: 11}
+        - {x: 30, y: 21}
+        - {x: 30, y: 28}
+        - {x: 29, y: 30}
+        - {x: 5, y: 30}
+        - {x: -8, y: 27}
+        - {x: -26, y: 2}
+        - {x: -30, y: -15}
+        - {x: -30, y: -29}
+        - {x: -27, y: -30}
+        - {x: -15, y: -30}
+        - {x: -14, y: -26}
+        - {x: -14, y: -19}
+        - {x: -17, y: -12}
+    - name: ui-icon-tool-select-rect
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: 14}
+        - {x: 28, y: 19}
+        - {x: 23, y: 24}
+        - {x: 18, y: 26}
+        - {x: -18, y: 26}
+        - {x: -23, y: 24}
+        - {x: -30, y: 17}
+        - {x: -30, y: -20}
+        - {x: -19, y: -26}
+        - {x: 18, y: -26}
+        - {x: 23, y: -24}
+        - {x: 28, y: -19}
+        - {x: 30, y: -14}
+    - name: ui-icon-tool-select-ellip
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 26}
+        - {x: -30, y: 23}
+        - {x: -30, y: -24}
+        - {x: -28, y: -26}
+        - {x: 28, y: -26}
+        - {x: 30, y: -25}
+        - {x: 30, y: 26}
+      - - {x: -21, y: 9}
+        - {x: 21, y: 9}
+        - {x: 21, y: -17}
+        - {x: -21, y: -17}
+    - name: ui-icon-tool-select-poly
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 26}
+        - {x: -30, y: -26}
+        - {x: 30, y: -26}
+        - {x: 30, y: 26}
+      - - {x: -21, y: 9}
+        - {x: 21, y: 9}
+        - {x: 21, y: -17}
+        - {x: -21, y: -17}
+    - name: ui-icon-tool-shape-rect
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: 30}
+        - {x: -30, y: 16}
+        - {x: -30, y: 8}
+        - {x: -25, y: -5}
+        - {x: 21, y: -28}
+        - {x: 28, y: -28}
+        - {x: 30, y: -24}
+        - {x: 30, y: -16}
+        - {x: 4, y: 30}
+    - name: ui-icon-tool-shape-ellip
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: 30}
+        - {x: -30, y: 16}
+        - {x: -30, y: 8}
+        - {x: -25, y: -5}
+        - {x: 21, y: -28}
+        - {x: 28, y: -28}
+        - {x: 30, y: -24}
+        - {x: 30, y: -16}
+        - {x: 4, y: 30}
+      - - {x: 15, y: 30}
+        - {x: 10, y: 24}
+        - {x: 10, y: 14}
+        - {x: 18, y: 10}
+        - {x: 28, y: 10}
+        - {x: 30, y: 11}
+        - {x: 30, y: 28}
+        - {x: 29, y: 30}
+    - name: ui-icon-tool-shape-poly
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: 30}
+        - {x: -30, y: 16}
+        - {x: -30, y: 8}
+        - {x: -25, y: -5}
+        - {x: 21, y: -28}
+        - {x: 28, y: -28}
+        - {x: 30, y: -24}
+        - {x: 30, y: -16}
+        - {x: 4, y: 30}
+      - - {x: 12, y: 24}
+        - {x: 10, y: 22}
+        - {x: 10, y: 18}
+        - {x: 12, y: 16}
+        - {x: 28, y: 16}
+        - {x: 30, y: 18}
+        - {x: 30, y: 22}
+        - {x: 28, y: 24}
+    - name: ui-icon-tool-shape-line
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 30}
+        - {x: -30, y: -12}
+        - {x: -30, y: -24}
+        - {x: -29, y: -30}
+        - {x: 13, y: -30}
+        - {x: 30, y: -6}
+        - {x: 30, y: 30}
+    - name: ui-icon-toolbar_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 10}
+        - {x: -29, y: 9}
+        - {x: -29, y: -24}
+        - {x: -27, y: -25}
+        - {x: -15, y: -25}
+        - {x: -14, y: -24}
+        - {x: -14, y: 8}
+        - {x: -16, y: 10}
+      - - {x: -14, y: -11}
+        - {x: -14, y: -25}
+        - {x: 9, y: -25}
+        - {x: 10, y: -24}
+        - {x: 10, y: -14}
+        - {x: 9, y: -11}
+      - - {x: 12, y: -10}
+        - {x: 10, y: -14}
+        - {x: 10, y: -24}
+        - {x: 11, y: -25}
+        - {x: 29, y: -25}
+        - {x: 29, y: -12}
+        - {x: 27, y: -10}
+      - - {x: 14, y: 25}
+        - {x: 14, y: -9}
+        - {x: 18, y: -10}
+        - {x: 27, y: -10}
+        - {x: 29, y: -8}
+        - {x: 29, y: 25}
+      - - {x: -29, y: 25}
+        - {x: -29, y: 10}
+        - {x: -18, y: 10}
+        - {x: -10, y: 15}
+        - {x: -10, y: 22}
+        - {x: -14, y: 25}
+      - - {x: 8, y: 25}
+        - {x: -6, y: 25}
+        - {x: -10, y: 23}
+        - {x: -10, y: 14}
+        - {x: -9, y: 11}
+        - {x: 14, y: 11}
+        - {x: 14, y: 20}
+        - {x: 13, y: 23}
+    - name: ui-icon-toolbar_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 30}
+        - {x: -30, y: 21}
+        - {x: -30, y: -1}
+        - {x: -29, y: -3}
+        - {x: -30, y: -8}
+        - {x: -30, y: -23}
+        - {x: -9, y: -30}
+        - {x: 20, y: -30}
+        - {x: 30, y: -20}
+        - {x: 30, y: 20}
+        - {x: 10, y: 30}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

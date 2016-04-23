@@ -19,12 +19,17 @@ public class ColorSwatchController : MonoBehaviour {
 	[Space]
 	public GameObject ColorCardPrototype;
 
-	List<ColorCardController> colorCards = new List<ColorCardController>();
+	bool colorSaved;
+	readonly List<ColorCardController> colorCards = new List<ColorCardController>();
 
 
 	void OnValidate () {
 		if (DeleteIconRect == null)
 			DeleteIconRect = DeleteIconHidable.GetComponent<RectTransform>();
+	}
+
+	void Awake () {
+		ColorPicker.OnColorChangedEvent += OnPickerColorChanged;
 	}
 
 	void Start () {
@@ -35,8 +40,13 @@ public class ColorSwatchController : MonoBehaviour {
 		ColorTabController.Fit();
 	}
 
+	void OnPickerColorChanged () {
+		colorSaved = false;
+	}
+
 	public void AddPickerColor () {
-		if (colorCards.Count >= MaxCardCount) return;
+		if (colorSaved || colorCards.Count >= MaxCardCount) return;
+		colorSaved = true;
 
 		foreach (var content in colorCards) {
 			if (content.Color == ColorPicker.CurrentColor) return;

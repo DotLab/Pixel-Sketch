@@ -10,36 +10,24 @@ public class ToolBarController : MonoBehaviour {
 		get { return _currentToolType; }
 		set {
 			if (value == _currentToolType) return;
-			if (OnToolChangedEvent != null) OnToolChangedEvent(value);
-
 			_currentToolType = value;
+
+			if (OnToolChangedEvent != null) OnToolChangedEvent(_currentToolType);
 		}
 	}
 
-	public ToolType _currentToolType;
-
-	public ToolType SelectToolType = ToolType.RectSelectTool;
-	public ToolType PaintToolType = ToolType.PencilPaintTool;
-	public ToolType ShapeToolType = ToolType.RectShapeTool;
+	ToolType _currentToolType = ToolType.None;
 
 	[Space]
 	public IconToggleGroup ToolGroup;
-	[Space]
-	public IconToggleGroup SelectToolGroup;
-	public IconToggleGroup PaintToolGroup;
-	public IconToggleGroup ShapeToolGroup;
-	IHidable selectToolHidable;
-	IHidable paintToolHidable;
-	IHidable shapeToolHidable;
 
 	[Space]
-	public SpriteSwapable SelectToolIcon;
-	public SpriteSwapable PaintToolIcon;
-	public SpriteSwapable ShapeToolIcon;
-	[Space]
-	public Sprite[] SelectToolIcons;
-	public Sprite[] PaintToolIcons;
-	public Sprite[] ShapeToolIcons;
+	public Hidable MagicToolHidable;
+	public IconToggleGroup MagicToolGroup;
+	public SpriteSwapable MagicToolIcon;
+	public Sprite[] MagicToolIcons;
+
+	public ToolType MagicToolType = ToolType.MagicNewTool;
 
 	[Space]
 	public Hidable ShowIcon;
@@ -50,118 +38,62 @@ public class ToolBarController : MonoBehaviour {
 	void Awake () {
 		ToolGroup.OnIconClickedEvent += OnDrawingIconClicked;
 
-		SelectToolGroup.OnIconClickedEvent += OnSelectToolIconClicked;
-		PaintToolGroup.OnIconClickedEvent += OnPaintToolIconClicked;
-		ShapeToolGroup.OnIconClickedEvent += OnShapeToolIconClicked;
-
-		selectToolHidable = SelectToolGroup.GetComponent<IHidable>();
-		paintToolHidable = PaintToolGroup.GetComponent<IHidable>();
-		shapeToolHidable = ShapeToolGroup.GetComponent<IHidable>();
+		MagicToolGroup.OnIconClickedEvent += OnMagicToolIconClicked;
 	}
 
 	void Start () {
-		CurrentToolType = ToolType.MoveTool;
+		CurrentToolType = ToolType.PencilPaintTool;
 	}
 
 	public void OnDrawingIconClicked (int index) {
-		selectToolHidable.Hide();
-		paintToolHidable.Hide();
-		shapeToolHidable.Hide();
+		MagicToolHidable.Hide();
 
 		switch (index) {
 		case 0:
-			CurrentToolType = ToolType.MoveTool;
+			CurrentToolType = ToolType.PencilPaintTool;
 			break;
 		case 1:
-			if (((int)CurrentToolType & (int)ToolType.ToolFamilyMask) == (int)ToolType.SelectTool) {
-				// CurrentTool belongs to SelectTool
-				selectToolHidable.Show();
-			}
-			CurrentToolType = SelectToolType;
+			CurrentToolType = ToolType.BrushPaintTool;
 			break;
 		case 2:
-			if (((int)CurrentToolType & (int)ToolType.ToolFamilyMask) == (int)ToolType.PaintTool) {
-				// CurrentTool belongs to PaintTool
-				paintToolHidable.Show();
-			}
-			CurrentToolType = PaintToolType;
-			break;
-		case 3:
 			CurrentToolType = ToolType.EraserTool;
 			break;
-		case 4:
-			if (((int)CurrentToolType & (int)ToolType.ToolFamilyMask) == (int)ToolType.ShapeTool) {
-				// CurrentTool belongs to ShapeTool
-				shapeToolHidable.Show();
-			}
-			CurrentToolType = ShapeToolType;
-			break;
-		default:
-			throw new System.NotImplementedException();
-		}
-	}
-
-	public void OnSelectToolIconClicked (int index) {
-		switch (index) {
-		case 0:
-			SelectToolType = ToolType.RectSelectTool;
-			break;
-		case 1:
-			SelectToolType = ToolType.EllipSelectTool;
-			break;
-		case 2:
-			SelectToolType = ToolType.PolySelectTool;
-			break;
-		default:
-			throw new System.NotImplementedException();
-		}
-		CurrentToolType = SelectToolType;
-		SelectToolIcon.Swap(SelectToolIcons[index]);
-		selectToolHidable.Hide();
-	}
-
-	public void OnPaintToolIconClicked (int index) {
-		switch (index) {
-		case 0:
-			PaintToolType = ToolType.PencilPaintTool;
-			break;
-		case 1:
-			PaintToolType = ToolType.BrushPaintTool;
-			break;
-		default:
-			throw new System.NotImplementedException();
-		}
-		CurrentToolType = PaintToolType;
-		PaintToolIcon.Swap(PaintToolIcons[index]);
-		paintToolHidable.Hide();
-	}
-
-	public void OnShapeToolIconClicked (int index) {
-		switch (index) {
-		case 0:
-			ShapeToolType = ToolType.RectShapeTool;
-			break;
-		case 1:
-			ShapeToolType = ToolType.EllipShapeTool;
-			break;
-		case 2:
-			ShapeToolType = ToolType.PolyShapeTool;
-			break;
 		case 3:
-			ShapeToolType = ToolType.LineShapeTool;
+			if (((int)CurrentToolType & (int)ToolType.ToolFamilyMask) == (int)ToolType.MagicTool)
+				MagicToolHidable.Show();
+			CurrentToolType = MagicToolType;
+			break;
+		case 4:
+			CurrentToolType = ToolType.TransTool;
 			break;
 		default:
 			throw new System.NotImplementedException();
 		}
-		CurrentToolType = ShapeToolType;
-		ShapeToolIcon.Swap(ShapeToolIcons[index]);
-		shapeToolHidable.Hide();
+	}
+
+	public void OnMagicToolIconClicked (int index) {
+		switch (index) {
+		case 0:
+			MagicToolType = ToolType.MagicNewTool;
+			break;
+		case 1:
+			MagicToolType = ToolType.MagicAddTool;
+			break;
+		case 2:
+			MagicToolType = ToolType.MagicSubTool;
+			break;
+		default:
+			throw new System.NotImplementedException();
+		}
+
+		CurrentToolType = MagicToolType;
+		MagicToolIcon.Swap(MagicToolIcons[index]);
+		MagicToolHidable.Hide();
 	}
 
 	public void OnHideButtonClicked () {
-		selectToolHidable.Hide();
-		paintToolHidable.Hide();
-		shapeToolHidable.Hide();
+		PackAll();
+
 		foreach (var bar in HidableTabs) {
 			bar.Hide();
 		}
@@ -177,5 +109,9 @@ public class ToolBarController : MonoBehaviour {
 
 	public void OnConfigButtonClicked () {
 		PopupManager.Instance.ShowPopup(ConfigPopup);
+	}
+
+	public void PackAll () {
+		MagicToolHidable.Hide();
 	}
 }
