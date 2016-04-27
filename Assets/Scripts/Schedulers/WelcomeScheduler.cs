@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using Uif;
 
-public class WelcomeSceneScheduler : MonoBehaviour {
+public class WelcomeScheduler : MonoBehaviour {
 	public const int MenuSceneIndex = 1;
 
 	public float Delay = 2;

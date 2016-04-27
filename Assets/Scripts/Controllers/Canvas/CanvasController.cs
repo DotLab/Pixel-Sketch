@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour {
+	public Rect Rect { get { return CanvasRect.rect; } }
+
 	public RawImage CanvasImage;
 	public RectTransform CanvasRect;
 
@@ -11,12 +13,14 @@ public class CanvasController : MonoBehaviour {
 
 		var aspect = (float)texture.width / texture.height;
 
-		if (Camera.main.aspect >= aspect) {
-			CanvasRect.sizeDelta = new Vector2(600 * aspect, 600);
-		} else {
-			var width = 600 * Camera.main.aspect;// * (600.0f / Screen.height);
-			CanvasRect.sizeDelta = new Vector2(width, width / aspect);
-		}
+		if (DrawingScheduler.AspectRatio >= aspect)
+			CanvasRect.sizeDelta = new Vector2(
+				DrawingScheduler.UiHeight * aspect,
+				DrawingScheduler.UiHeight);
+		else
+			CanvasRect.sizeDelta = new Vector2(
+				DrawingScheduler.UiWidth,
+				DrawingScheduler.UiWidth / aspect);
 	}
 }
 	

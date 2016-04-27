@@ -5,65 +5,66 @@ using System.Collections.Generic;
 public class SelectionGridController : MonoBehaviour {
 	public Color Color = Color.green;
 
-	public float Scale;
-	public float Rotation;
-	public Vector3 Pivotal;
-	public Vector3 Position;
-
-	public Short2 size;
-
-	public Selection Selection = new Selection();
 	public List<Vector3> Grid = new List<Vector3>();
 
-	RectTransform trans;
+	float scale;
+	Quaternion rotation;
+	Vector3 pivotal;
+	Vector3 position;
+
 	Material material;
 
 	void Awake () {
-		trans = GetComponent<RectTransform>();
-
 		var shader = Shader.Find("Hidden/Internal-Colored");
 		material = new Material(shader);
 		material.hideFlags = HideFlags.HideAndDontSave;
 	}
 
-	void Start () {
-//		for (int x = 1; x <= 16; x++) {
-//			for (int y = 1; y <= 16; y++) {
-//				Selection.SetSelection(new Short2(x, y), true);
-//			}
-//		}
-//		BuildGrid();
+	void Update () {
+		if (SelectionController.Selection.GridDirtyFlag) BuildGrid();
 	}
 
+	// The position of the vertex in the grid has
+	// a coonstant shift of (0.5, 0.5) from the
+	// vertex in the selection controller.
+	// This is because when selection controller
+	// render one pixel, the vertex on the screen
+	// is actuallly the center of the grid.
 	public void BuildGrid () {
-		var drawingSize = DrawingSceneScheduler.Instance.DrawingSize;
-		var factor = 600.0f / drawingSize.y;
+		var selection = SelectionController.Selection;
+
+		scale = selection.Scale;
+		rotation = Quaternion.Euler(0, 0, selection.Rotation);
+		pivotal = new Vector3(selection.Pivotal.x + 0.5f, selection.Pivotal.y + 0.5f) * DrawingScheduler.Coordinate2Ui;
+		position = new Vector3(selection.Position.x + 0.5f, selection.Position.y + 0.5f) * DrawingScheduler.Coordinate2Ui;
+
+		var factor = DrawingScheduler.Coordinate2Ui;
 
 		Grid.Clear();
 
-		foreach (var key in Selection.Area.Keys) {
+		foreach (var key in selection.Area.Keys) {
 			var bottomLeft = new Vector2(key.x * factor, key.y * factor);
 			var bottomRight = bottomLeft + Vector2.right * factor;
 			var topLeft = bottomLeft + Vector2.up * factor;
 			var topRight = bottomLeft + Vector2.one * factor;
 
 
-			if (!Selection.GetSelection(new Short2(key.x - 1, key.y))) {
+			if (!selection.GetSelection(new Short2(key.x - 1, key.y))) {
 				Grid.Add((Vector3)topLeft);
 				Grid.Add((Vector3)bottomLeft);
 			}
 
-			if (!Selection.GetSelection(new Short2(key.x + 1, key.y))) {
+			if (!selection.GetSelection(new Short2(key.x + 1, key.y))) {
 				Grid.Add((Vector3)topRight);
 				Grid.Add((Vector3)bottomRight);
 			}
 
-			if (!Selection.GetSelection(new Short2(key.x, key.y - 1))) {
+			if (!selection.GetSelection(new Short2(key.x, key.y - 1))) {
 				Grid.Add((Vector3)bottomLeft);
 				Grid.Add((Vector3)bottomRight);
 			}
 
-			if (!Selection.GetSelection(new Short2(key.x, key.y + 1))) {
+			if (!selection.GetSelection(new Short2(key.x, key.y + 1))) {
 				Grid.Add((Vector3)topLeft);
 				Grid.Add((Vector3)topRight);
 			}
@@ -71,7 +72,7 @@ public class SelectionGridController : MonoBehaviour {
 	}
 
 	void OnRenderObject () {
-		if ((Grid.Count & 1) != 0) return;
+		if (Grid.Count < 1 || (Grid.Count & 1) != 0) return;
 
 		// Apply the line material
 		material.SetPass(0);
@@ -92,19 +93,9 @@ public class SelectionGridController : MonoBehaviour {
 		GL.PopMatrix();
 	}
 
-	// The position of the vertex in the grid has
-	// a coonstant shift of (0.5, 0.5) from the
-	// vertex in the selection controller.
-	// This is because when selection controller
-	// render one pixel, the vertex of the screen
-	// is actuallly the center of the grid.
 	Vector3 TransformVertex (Vector3 v) {
-		var pivotal = new Vector3(Pivotal.x + 0.5f, Pivotal.y + 0.5f) * (600.0f / size.y);
-		var rotation = Quaternion.Euler(0, 0, Rotation);
-		var position = new Vector3(Position.x + 0.5f, Position.y + 0.5f) * (600.0f / size.y);
-
 		v -= pivotal;
-		v *= Scale;
+		v *= scale;
 		v = rotation * v;
 		v += position;
 		return v;

@@ -3,19 +3,22 @@
 using System.Collections.Generic;
 
 public class Drawing {
-	public readonly CanvasController UiController;
+	readonly CanvasController canvasUi;
+	readonly List<Layer> layers = new List<Layer>();
+
+	readonly Selection selection;
 
 	Short2 size;
 	Texture2D texture;
-
 	bool dirtyFlag;
-	Layer selectedLayer;
-	readonly Selection selection = new Selection();
-	readonly List<Layer> layers = new List<Layer>();
 
-	public Drawing (CanvasController uiController, Short2 c) {
-		UiController = uiController;
-		size = c;
+	Layer selectedLayer;
+
+
+	public Drawing (Short2 size, CanvasController canvasUi, Selection selection) {
+		this.size = size;
+		this.canvasUi = canvasUi;
+		this.selection = selection;
 
 		RenderDrawing();
 	}
@@ -26,27 +29,29 @@ public class Drawing {
 		selection.ClearSelection();
 	}
 
-	public void NewSelection (Short2 point) {
+	public void NewSelection (Short2 c) {
 		ClearSelection();
-		AddSelection(point);
+		AddToSelection(c);
 	}
 
-	public void AddSelection (Short2 point) {
+	public void AddToSelection (Short2 c) {
 		if (selectedLayer == null) return;
 
-		selectedLayer.AddToSelection(point, selection);
+		selectedLayer.AddToSelection(c, selection);
 	}
 
-	public void SubSelection (Short2 point) {
+	public void SubFromSelection (Short2 c) {
 		if (selectedLayer == null) return;
 
-		selectedLayer.SubFromSelection(point, selection);
+		selectedLayer.SubFromSelection(c, selection);
 	}
 
 	public void ApplySelection () {
 		if (selectedLayer == null) return;
 
 		selectedLayer.ApplySelection(selection);
+
+		Render();
 	}
 
 	public void ApplyTransform () {
@@ -54,6 +59,8 @@ public class Drawing {
 
 		selectedLayer.ApplyTransform(selection);
 		ClearSelection();
+
+		Render();
 	}
 
 	#endregion
@@ -66,6 +73,8 @@ public class Drawing {
 
 	public void SetColor (Short2 point, Color color) {
 		if (selectedLayer == null) return;
+
+		if (selection.Area.Count > 0 && !selection.Area.ContainsKey(point)) return;
 
 		dirtyFlag |= selectedLayer.SetColor(point, color);
 	}
@@ -163,8 +172,7 @@ public class Drawing {
 		if (!dirtyFlag) return;
 		dirtyFlag = false;
 
-		RenderDrawing();
-		selectedLayer.RenderLayer();
+		Render();
 	}
 
 	#endregion
@@ -172,7 +180,7 @@ public class Drawing {
 	#region Layer
 
 	public void AddLayer (LayerController layerUi) {
-		layers.Add(new Layer(layerUi, size));
+		layers.Add(new Layer(size, layerUi));
 	}
 
 	public void DeleteLayer (LayerController layerUi) {
@@ -187,7 +195,7 @@ public class Drawing {
 
 	public Layer FindLayer (LayerController layerUi) {
 		foreach (var layer in layers)
-			if (layer.UiController == layerUi) return layer;
+			if (layer.Index == layerUi.Index) return layer;
 
 		return null;
 	}
@@ -206,13 +214,18 @@ public class Drawing {
 		RenderDrawing();
 	}
 
+	public void Render () {
+		RenderDrawing();
+		selectedLayer.RenderLayer();
+	}
+
 	public void RenderDrawing () {
 		if (texture == null || texture.width != size.x || texture.height != size.y) {
 			if (texture != null) Object.DestroyImmediate(texture);
 			texture = new Texture2D(size.x, size.y, TextureFormat.RGBA32, false);
 			texture.filterMode = FilterMode.Point;
 			texture.hideFlags = HideFlags.DontSave;
-			UiController.SetTexture(texture);
+			canvasUi.SetTexture(texture);
 		}
 
 		layers.Sort(new Layer.UiComparer());
@@ -237,16 +250,16 @@ public class Drawing {
 */
 
 		// O(height * width * layerCount)
-		var rendered = new Dictionary<Short2, bool>();
+		var renderDict = new Dictionary<Short2, bool>();
 		foreach (var layer in layers) {
 			if (layer.Hided) continue;
 
-			foreach (var key in layer.Content.Keys) {
+			foreach (var key in layer.GetColorKeys()) {
 				if (IsIllegal(key)) continue;
 
-				if (!rendered.ContainsKey(key)) {
-					pixels[key.x + key.y * size.x] = layer.Content[key];
-					rendered[key] = true;
+				if (!renderDict.ContainsKey(key)) {
+					pixels[key.x + key.y * size.x] = layer.GetColor(key);
+					renderDict[key] = true;
 				}
 			}
 		}

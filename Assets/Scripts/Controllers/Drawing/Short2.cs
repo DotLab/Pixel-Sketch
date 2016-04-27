@@ -20,10 +20,10 @@ public struct Short2 {
 		y = (Int16)value;
 	}
 
-	public override bool Equals (object obj) {
-		if (obj is Short2) {
-			var int2 = (Short2)obj;
-			return int2.x == x && int2.y == y;
+	public override bool Equals (object other) {
+		if (other is Short2) {
+			var s = (Short2)other;
+			return s.x == x && s.y == y;
 		}
 
 		return false;
@@ -35,6 +35,24 @@ public struct Short2 {
 
 	public override string ToString () {
 		return "(" + x + ", " + y + ")";
+	}
+
+	public static Short2 MinValue { get { return new Short2(Int16.MinValue, Int16.MinValue); } }
+
+	public static Short2 MaxValue { get { return new Short2(Int16.MaxValue, Int16.MaxValue); } }
+
+	public static Short2 One { get { return new Short2(1, 1); } }
+
+	public static Short2 Min (Short2 left, Short2 right) {
+		return new Short2(
+			left.x < right.x ? left.x : right.x,
+			left.y < right.y ? left.y : right.y);
+	}
+
+	public static Short2 Max (Short2 left, Short2 right) {
+		return new Short2(
+			left.x > right.x ? left.x : right.x,
+			left.y > right.y ? left.y : right.y);
 	}
 
 	public static bool operator == (Short2 left, Short2 right) {

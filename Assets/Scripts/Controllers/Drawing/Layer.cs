@@ -9,30 +9,34 @@ public class Layer {
 		}
 	}
 
-	public int Index { get { return UiController.Index; } }
+	public int Index { get { return layerUi.Index; } }
 
-	public bool Hided { get { return UiController.Hided; } }
+	public bool Hided { get { return layerUi.Hided; } }
 
-	public bool Locked { get { return UiController.Locked; } }
+	public bool Locked { get { return layerUi.Locked; } }
 
-	public readonly LayerController UiController;
-	public readonly Dictionary<Short2, Color> Content = new Dictionary<Short2, Color>();
+	readonly LayerController layerUi;
+	readonly Dictionary<Short2, Color> content = new Dictionary<Short2, Color>();
 
 	Short2 size;
 	Texture2D texture;
 
 
-	public Layer (LayerController uiController, Short2 c) {
-		UiController = uiController;
-		size = c;
+	public Layer (Short2 size, LayerController layerUi) {
+		this.size = size;
+		this.layerUi = layerUi;
 
 		RenderLayer();
 	}
 
-	#region Draw
+	#region Color
+
+	public ICollection<Short2> GetColorKeys () {
+		return content.Keys;
+	}
 
 	public bool HasColor (Short2 c) {
-		return Content.ContainsKey(c);
+		return content.ContainsKey(c);
 	}
 
 	public bool SetColor (Short2 c, Color color) {
@@ -44,21 +48,21 @@ public class Layer {
 
 		if (GetColor(c) == color) return false; // No Change
 
-		Content[c] = color;
+		content[c] = color;
 		return true;
 	}
 
 	public Color GetColor (Short2 c) {
 		if (IsIllegal(c)) return Color.clear;
 
-		return HasColor(c) ? Content[c] : Color.clear;
+		return HasColor(c) ? content[c] : Color.clear;
 	}
 
 	public bool ClearColor (Short2 c) {
 		if (IsIllegal(c)) return false;
 
 		if (HasColor(c)) {
-			Content.Remove(c);
+			content.Remove(c);
 			return true;
 		}
 		return false;
@@ -87,18 +91,22 @@ public class Layer {
 
 	#endregion
 
-	#region Select
+	#region Selection
 
 	public void AddToSelection (Short2 c, Selection selection) {
 		if (IsIllegal(c)) return;
 
 		FloodSetSelection(c, GetColor(c), true, selection);
+	
+		selection.CalcPivotal();
 	}
 
 	public void SubFromSelection (Short2 c, Selection selection) {
 		if (IsIllegal(c)) return;
 
 		FloodSetSelection(c, GetColor(c), false, selection);
+
+		selection.CalcPivotal();
 	}
 
 	void FloodSetSelection (Short2 c, Color src, bool value, Selection selection) {
@@ -112,13 +120,50 @@ public class Layer {
 	}
 
 	public void ApplySelection (Selection selection) {
-		foreach (var key in selection.Area.Keys) {
-			
+		if (selection.Area.Count == 0) {
+			foreach (var key in content.Keys)
+				selection.SetSelection(key);
+			selection.CalcPivotal();
 		}
+
+		var keys = new List<Short2>();
+		foreach (var key in selection.Area.Keys) {
+			if (HasColor(key)) selection.Content[key] = GetColor(key);
+			else keys.Add(key);
+		
+			ClearColor(key);
+		}
+
+		foreach (var key in keys) {
+			selection.SetSelection(key, false);
+		}
+		selection.CalcPivotal();
 	}
 
 	public void ApplyTransform (Selection selection) {
+		selection.CalcExtent();
+		var min = selection.MinC;
+		var max = selection.MaxC;
 
+		var rotation = Quaternion.Euler(0, 0, -selection.Rotation);
+		int i = 0;
+		for (int y = 0; y < size.y; y++) {
+			for (int x = 0; x < size.y; x++) {
+				var coordinate = new Vector3(x, y);
+				coordinate -= selection.Position;
+				coordinate = rotation * coordinate;
+				coordinate /= selection.Scale;
+				coordinate += selection.Pivotal;
+				var originalCoordinate = new Short2(coordinate.x + 0.5f, coordinate.y + 0.5f);
+
+				if (selection.Content.ContainsKey(originalCoordinate) && selection.Content[originalCoordinate].a != 0)
+					SetColor(new Short2(x, y), selection.Content[originalCoordinate]);
+
+				i++;
+			}
+		}
+
+		selection.ResetSelection();
 	}
 
 	#endregion
@@ -138,14 +183,14 @@ public class Layer {
 			texture = new Texture2D(size.x, size.y, TextureFormat.RGBA32, false);
 			texture.filterMode = FilterMode.Point;
 			texture.hideFlags = HideFlags.DontSave;
-			UiController.SetThumbnail(texture);
+			layerUi.SetThumbnail(texture);
 		}
 
 		var pixels = new Color[size.x * size.y];
-		foreach (var key in Content.Keys) {
+		foreach (var key in content.Keys) {
 			if (IsIllegal(key)) continue;
 
-			pixels[key.x + key.y * size.x] = Content[key];
+			pixels[key.x + key.y * size.x] = content[key];
 		}
 			
 		texture.SetPixels(pixels);

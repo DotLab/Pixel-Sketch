@@ -28,19 +28,20 @@ public class ConfigPopupController : MonoBehaviour {
 			ResolutionXField.text = x + "px";
 			ResolutionYField.text = y + "px";
 
-			DrawingSceneScheduler.Instance.ResizeDrawing(new Short2(x, y));
+			DrawingScheduler.ResizeDrawing(new Short2(x, y));
 		} else ResetResolutionField();
 	}
 
 	void ResetResolutionField () {
-		var drawingSize = DrawingSceneScheduler.Instance.DrawingSize;
+		var drawingSize = DrawingScheduler.DrawingSize;
 		ResolutionXField.text = drawingSize.x + "px";
 		ResolutionYField.text = drawingSize.y + "px";
 	}
 
 	public void OnGridFieldEndEdit () {
 		int gridSize, subdivision;
-		var drawingSize = DrawingSceneScheduler.Instance.DrawingSize;
+		var drawingSize = DrawingScheduler.DrawingSize;
+
 		if (
 			int.TryParse(GridSizeField.text, out gridSize)
 			&& int.TryParse(GridSubdivisionField.text, out subdivision)

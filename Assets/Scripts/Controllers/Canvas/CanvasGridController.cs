@@ -19,7 +19,7 @@ public class CanvasGridController : MonoBehaviour {
 	}
 
 	void OnRenderObject () {
-		var drawingSize = DrawingSceneScheduler.Instance.DrawingSize;
+		var drawingSize = DrawingScheduler.DrawingSize;
 		if (GridSize < 1 || GridSize > Mathf.Max(drawingSize.x, drawingSize.y))
 			return;
 
