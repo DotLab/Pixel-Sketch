@@ -38,8 +38,8 @@ public abstract class RectContentFitter : MonoBehaviour {
 		fullContents.AddRange(Footer);
 
 		if (TryFit(fullContents.ToArray())) {
-			for (int i = 0; i < fullContents.Count; i++)
-				fullContents[i].Index = i;
+			for (int i = 0; i < contents.Length; i++)
+				contents[i].Index = i;
 			
 			StopAllCoroutines();
 			StartCoroutine(FitHandler(fullContents.ToArray()));

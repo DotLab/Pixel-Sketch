@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 
+using System.Collections;
+
 public class DrawingScheduler : MonoBehaviour {
+	public static DrawingScheduler Instance;
+
 	public static Short2 DrawingSize { get; private set; }
 
 	public static ToolType CurrentTool { get; private set; }
@@ -32,6 +36,8 @@ public class DrawingScheduler : MonoBehaviour {
 		return c.x < 0 || c.x >= DrawingSize.x || c.y < 0 || c.y >= DrawingSize.y;
 	}
 
+	public Uif.Hidable Overlay;
+
 	public CanvasController Canvas;
 	public CursorController Cursor;
 	public CursorTouchHandler CursorTouch;
@@ -42,10 +48,21 @@ public class DrawingScheduler : MonoBehaviour {
 	public ColorSwatchController ColorSwatch;
 	public LayerTabController LayerTab;
 
+	[System.Serializable]
+	public struct C {
+		public readonly System.Int16 x;
+		public readonly System.Int16 y;
+
+		public C (int x, int y) {
+			this.x = (System.Int16)x;
+			this.y = (System.Int16)y;
+		}
+	}
 
 	void Awake () {
-		DrawingSize = new Short2(32, 32);
-		drawing = new Drawing(DrawingSize, Canvas, SelectionController.Selection);
+		Instance = this;
+
+		DrawingSize = App.CurrentDrawingFile.Size;
 
 		Cursor.OnCursorMovedEvent += OnCursorMoved;
 		Cursor.OnCursorDraggedEvent += OnCursorDragged;
@@ -54,11 +71,37 @@ public class DrawingScheduler : MonoBehaviour {
 		ToolBar.OnToolChangedEvent += OnToolChanged;
 
 		ColorTab.OnColorChangedEvent += color => MainColor = color;
+	}
+
+	void Start () {
+		drawing = new Drawing(App.CurrentDrawingFile, Canvas, SelectionController.Selection);
 
 		LayerTab.OnLayerAddedEvent += drawing.AddLayer;
 		LayerTab.OnLayerDeletedEvent += drawing.DeleteLayer;
 		LayerTab.OnLayerSelectedEvent += drawing.SelectLayer;
 		LayerTab.OnLayerChangedEvent += layer => drawing.RenderDrawing();
+	}
+
+	public void SaveAndQuit () {
+		DataLayer.SaveFile(drawing.ParseFile());
+		DiscardAndQuit();
+	}
+
+	public void DiscardAndQuit () {
+		DataLayer.DiscardUnsavedFile();
+		StopAllCoroutines();
+		StartCoroutine(SceneTransitionHandler());
+	}
+
+	IEnumerator SceneTransitionHandler () {
+		Overlay.Show();
+		yield return new WaitForSeconds(0.5f);
+		App.LoadScene(App.GallerySceneIndex);
+	}
+
+	void OnApplicationFocus (bool focusStatus) {
+		if (!focusStatus)
+			DataLayer.SaveUnsavedFile(drawing.ParseFile());
 	}
 
 	void OnToolChanged (ToolType toolType) {

@@ -2,17 +2,12 @@
 using UnityEngine.UI;
 
 public class GridLayoutFitter : MonoBehaviour {
-	public bool FitX = true;
-	public int CountX = 2;
-	public float PaddingX = 10;
+	[Range(1, 32)]
+	public int Count = 2;
 
-	public bool FitY = false;
-	public int CountY = 2;
-	public float PaddingY = 10;
+	public int Spacing = 10;
+	public int Padding = 10;
 
-	void Start () {
-		OnRectTransformDimensionsChange();
-	}
 
 	void OnValidate () {
 		OnRectTransformDimensionsChange();
@@ -22,12 +17,21 @@ public class GridLayoutFitter : MonoBehaviour {
 	public void OnRectTransformDimensionsChange () {
 		var trans = GetComponent<RectTransform>();
 		var grid = GetComponent<GridLayoutGroup>();
-		float cellSizeX, cellSizeY;
-		cellSizeX = trans.rect.width / CountX - PaddingX * (CountX - 1) / 2;
-		cellSizeY = trans.rect.height / CountY - PaddingY * (CountY - 1) / 2;
-		if (!FitX) cellSizeX = cellSizeY;
-		if (!FitY) cellSizeY = cellSizeX;
+	
+		if (trans.rect.width < 0) return;
 
-		grid.cellSize = new Vector2(cellSizeX, cellSizeY);
+		float cellSize;
+
+		cellSize = (trans.rect.width - Padding * 2 - Spacing * (Count - 1)) / Count;
+
+		grid.startAxis = GridLayoutGroup.Axis.Horizontal;
+		grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+		grid.constraintCount = Count;
+
+
+		grid.spacing = new Vector2(Spacing, Spacing);
+		grid.padding = new RectOffset(Padding, Padding, Padding, Padding);
+
+		grid.cellSize = new Vector2(cellSize, cellSize);
 	}
 }

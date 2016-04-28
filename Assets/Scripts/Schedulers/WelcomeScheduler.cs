@@ -38,6 +38,11 @@ public class WelcomeScheduler : MonoBehaviour {
 		Overlay.Show();
 		yield return new WaitForSeconds(0.5f);
 
-		SceneManager.LoadScene(MenuSceneIndex);
+		if (DataLayer.HasUnsavedFile()) {
+			App.CurrentDrawingFile = DataLayer.LoadUnsavedFile();
+			App.LoadScene(App.DrawingSceneIndex);
+		} else {
+			App.LoadScene(App.GallerySceneIndex);
+		}
 	}
 }

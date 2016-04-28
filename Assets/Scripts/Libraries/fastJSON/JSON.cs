@@ -74,7 +74,7 @@ namespace fastJSON {
 		/// <summary>
 		/// Inline circular or already seen objects instead of replacement with $i (default = False) 
 		/// </summary>
-		public bool InlineCircularReferences = false;
+		public bool InlineCircularReferences = true;
 		/// <summary>
 		/// Save property/field names as lowercase (default = false)
 		/// </summary>

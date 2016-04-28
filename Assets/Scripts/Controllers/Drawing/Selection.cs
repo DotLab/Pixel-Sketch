@@ -43,14 +43,6 @@ public class Selection {
 		}
 	}
 
-	public Vector3 Min { get { return min; } }
-
-	public Vector3 Max { get { return max; } }
-
-	public Short2 MinC { get { return minC; } }
-
-	public Short2 MaxC { get { return maxC; } }
-
 	float scale;
 	float rotation;
 	Vector3 pivotal;
@@ -58,8 +50,6 @@ public class Selection {
 
 	Vector3 min;
 	Vector3 max;
-	Short2 minC;
-	Short2 maxC;
 
 	public bool UiDirtyFlag;
 	public bool GridDirtyFlag;
@@ -113,21 +103,5 @@ public class Selection {
 
 		pivotal = (min + max) * 0.5f;
 		position = pivotal;
-	}
-
-	public void CalcExtent () {
-		minC = Short2.MaxValue;
-		maxC = Short2.MinValue;
-
-		foreach (var key in Area.Keys) {
-			var v = new Vector3(key.x, key.y);
-			v -= pivotal;
-			v *= scale;
-			v = Quaternion.Euler(0, 0, rotation) * v;
-			v += position;
-			var c = new Short2(v.x, v.y);
-			minC = Short2.Min(minC, c);
-			maxC = Short2.Max(maxC, c);
-		}
 	}
 }

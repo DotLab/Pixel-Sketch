@@ -2,12 +2,25 @@
 
 [Serializable]
 public struct Short2 {
-	public Int16 x;
-	public Int16 y;
+	public const Int16 MinValue = Int16.MinValue;
+	public const Int16 MaxValue = Int16.MaxValue;
 
-	public Short2 (float x, float y) {
-		this.x = (Int16)x;
-		this.y = (Int16)y;
+	public readonly Int16 x;
+	public readonly Int16 y;
+
+	public Short2 (Int16 value) {
+		x = value;
+		y = value;
+	}
+
+	public Short2 (Int16 x, Int16 y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public Short2 (int value) {
+		x = (Int16)value;
+		y = (Int16)value;
 	}
 
 	public Short2 (int x, int y) {
@@ -15,9 +28,9 @@ public struct Short2 {
 		this.y = (Int16)y;
 	}
 
-	public Short2 (int value) {
-		x = (Int16)value;
-		y = (Int16)value;
+	public Short2 (float x, float y) {
+		this.x = (Int16)x;
+		this.y = (Int16)y;
 	}
 
 	public override bool Equals (object other) {
@@ -36,12 +49,6 @@ public struct Short2 {
 	public override string ToString () {
 		return "(" + x + ", " + y + ")";
 	}
-
-	public static Short2 MinValue { get { return new Short2(Int16.MinValue, Int16.MinValue); } }
-
-	public static Short2 MaxValue { get { return new Short2(Int16.MaxValue, Int16.MaxValue); } }
-
-	public static Short2 One { get { return new Short2(1, 1); } }
 
 	public static Short2 Min (Short2 left, Short2 right) {
 		return new Short2(

@@ -57,12 +57,4 @@ public class ConfigPopupController : MonoBehaviour {
 		GridSizeField.text = CanvasGrid.GridSize.ToString();
 		GridSubdivisionField.text = CanvasGrid.Subdivision.ToString();
 	}
-
-	public void OnSaveAndQuitButtonClicked () {
-		DebugConsole.Log("Save and quit.");
-	}
-
-	public void OnDiscardButtonClicked () {
-		DebugConsole.Log("Discard changes.");
-	}
 }

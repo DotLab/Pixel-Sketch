@@ -29,6 +29,39 @@ public class Layer {
 		RenderLayer();
 	}
 
+	public Layer (LayerFile file, Short2 size, LayerController layerUi) {
+		this.size = size;
+		this.layerUi = layerUi;
+
+		layerUi.Index = file.Index;
+		if (file.Hided) layerUi.OnHideToggleClicked();
+		if (file.Locked) layerUi.OnLockToggleClicked();
+//		layerUi.Hided = file.Hided;
+//		layerUi.Locked = file.Locked;
+		content = file.Content;
+//		foreach (var pair in file.Content)
+//			content.Add(pair.k, pair.c);
+
+		RenderLayer();
+	}
+
+	public LayerFile ParseFile () {
+		var file = new LayerFile();
+
+		file.Index = Index;
+		file.Hided = Hided;
+		file.Locked = Locked;
+		file.Content = content;
+//		file.Content = new LayerFile.ColorPair[content.Count];
+//		int i = 0;
+//		foreach (var pair in content) {
+//			file.Content[i] = new LayerFile.ColorPair(pair.Key, pair.Value);
+//			i++;
+//		}
+		
+		return file;
+	}
+
 	#region Color
 
 	public ICollection<Short2> GetColorKeys () {
@@ -141,10 +174,6 @@ public class Layer {
 	}
 
 	public void ApplyTransform (Selection selection) {
-		selection.CalcExtent();
-		var min = selection.MinC;
-		var max = selection.MaxC;
-
 		var rotation = Quaternion.Euler(0, 0, -selection.Rotation);
 		int i = 0;
 		for (int y = 0; y < size.y; y++) {

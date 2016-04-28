@@ -133,7 +133,7 @@ namespace fastJSON {
 				return sd;
 			} else {
 				sd = new Dictionary<string, myPropInfo>();
-				PropertyInfo[] pr = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+				PropertyInfo[] pr = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);// | BindingFlags.Static);
 				foreach (PropertyInfo p in pr) {
 					if (p.GetIndexParameters().Length > 0) {// Property is an indexer
 						continue;
@@ -145,7 +145,7 @@ namespace fastJSON {
 					d.getter = Reflection.CreateGetMethod(type, p);
 					sd.Add(p.Name.ToLower(), d);
 				}
-				FieldInfo[] fi = type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+				FieldInfo[] fi = type.GetFields(BindingFlags.Public | BindingFlags.Instance);// | BindingFlags.Static);
 				foreach (FieldInfo f in fi) {
 					myPropInfo d = CreateMyProp(f.FieldType, f.Name, customType);
 					if (f.IsLiteral == false) {
@@ -407,6 +407,7 @@ namespace fastJSON {
 				il.Emit(OpCodes.Stloc_0);
 				il.Emit(OpCodes.Ldloca_S, lv);
 				il.EmitCall(OpCodes.Call, getMethod, null);
+
 				if (propertyInfo.PropertyType.IsValueType)
 					il.Emit(OpCodes.Box, propertyInfo.PropertyType);
 			} else {

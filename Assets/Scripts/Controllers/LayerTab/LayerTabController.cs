@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Uif;
 
 public class LayerTabController : MonoBehaviour {
+	public static LayerTabController Instance;
+
 	public event LayerController.OnStateChanged OnLayerAddedEvent;
 	public event LayerController.OnStateChanged OnLayerDeletedEvent;
 	public event LayerController.OnStateChanged OnLayerSelectedEvent;
@@ -46,10 +48,15 @@ public class LayerTabController : MonoBehaviour {
 			DeleteIconRect = DeleteIconHidable.GetComponent<RectTransform>();
 	}
 
-	void Start () {
-		SelectedLayer = AddLayer();
+	void Awake () {
+		Instance = this;
+	}
 
-		LayerTabFitter.Fit(layers.ToArray());
+	public LayerController[] AddLayers (int count) {
+		for (int i = 0; i < count; i++)
+			AddLayer();
+		
+		return layers.ToArray();
 	}
 
 	public LayerController AddLayer () {
@@ -61,7 +68,7 @@ public class LayerTabController : MonoBehaviour {
 		layerController.OnPressedEvent += OnLayerPressed;
 		layerController.OnDragedEvent += OnLayerDraged;
 		layerController.OnReleasedEvent += OnLayerReleased;
-		layerController.OnChangedEvent += OnLayerChangedEvent;
+		layerController.OnChangedEvent += OnLayerChanged;
 		layerController.Init(LayerTabRect, Vector2.zero);
 
 		layers.Insert(0, layerController);
@@ -104,6 +111,10 @@ public class LayerTabController : MonoBehaviour {
 
 		LayerTabFitter.Fit(layers.ToArray());
 
+		if (OnLayerChangedEvent != null) OnLayerChangedEvent(layer);
+	}
+
+	public void OnLayerChanged (LayerController layer) {
 		if (OnLayerChangedEvent != null) OnLayerChangedEvent(layer);
 	}
 }

@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 
 public class Drawing {
+	readonly DrawingFile file;
+
 	readonly CanvasController canvasUi;
 	readonly List<Layer> layers = new List<Layer>();
 
@@ -14,13 +16,38 @@ public class Drawing {
 
 	Layer selectedLayer;
 
-
 	public Drawing (Short2 size, CanvasController canvasUi, Selection selection) {
+		this.file = new DrawingFile();
 		this.size = size;
 		this.canvasUi = canvasUi;
 		this.selection = selection;
 
 		RenderDrawing();
+	}
+
+	public Drawing (DrawingFile file, CanvasController canvasUi, Selection selection) {
+		this.file = file;
+		size = file.Size;
+		this.canvasUi = canvasUi;
+		this.selection = selection;
+
+		var layerUis = LayerTabController.Instance.AddLayers(file.Layers.Length);
+		foreach (var layer in file.Layers) {
+			layers.Add(new Layer(layer, size, layerUis[layer.Index]));
+		}
+
+		RenderDrawing();
+	}
+
+	public DrawingFile ParseFile () {
+		file.DateModified = System.DateTime.Now.ToLongDateString();
+		file.Size = size;
+		file.Layers = new LayerFile[layers.Count];
+		for (int i = 0; i < layers.Count; i++) {
+			file.Layers[i] = layers[i].ParseFile();
+		}
+
+		return file;
 	}
 
 	#region Selection
